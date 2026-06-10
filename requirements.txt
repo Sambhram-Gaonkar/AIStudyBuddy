@@ -5,3 +5,4 @@ requests
 xhtml2pdf
 python-dotenv
 python-docx
+python-pptx

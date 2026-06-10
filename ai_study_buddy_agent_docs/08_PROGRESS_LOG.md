@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-10
 
 Agent: Codex
+Task IDs: B002
+Summary: Added PPTX upload support using local python-pptx extraction and routed PowerPoint uploads through the shared document reader before chunking and indexing.
+Files Changed: requirements.txt, notes/forms.py, rag_engine/document_reader.py, rag_engine/pptx_reader.py, templates/notes/list.html, task/progress/changelog docs.
+Testing Done: Ran `venv\Scripts\python.exe manage.py check`, ran Python compileall for notes/rag_engine/config, and ran a Django client smoke test that uploaded an in-memory PPTX, verified extracted text/chunking, and asked a RAG question against the uploaded PPTX.
+Status: B002 finished.
+Next Step: Backlog can continue with B003, OCR for image notes.
+
+---
+
+## 2026-06-10
+
+Agent: Codex
 Task IDs: B001
 Summary: Added DOCX upload support using local python-docx extraction and routed PDF/DOCX uploads through a shared document reader before chunking and indexing.
 Files Changed: requirements.txt, notes/forms.py, notes/views.py, rag_engine/docx_reader.py, rag_engine/document_reader.py, templates/dashboard/home.html, templates/notes/list.html, templates/notes/upload.html, task/progress/changelog docs.

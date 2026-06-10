@@ -49,7 +49,7 @@ Allowed status values:
 | ID | Task | Priority | Status | Notes |
 |---|---|---:|---|---|
 | B001 | Add DOCX upload | Low | Finished | Local DOCX text extraction added |
-| B002 | Add PPT upload | Low | Pending | After MVP |
+| B002 | Add PPT upload | Low | Finished | Local PPTX text extraction added |
 | B003 | Add OCR for image notes | Low | Pending | After MVP |
 | B004 | Add quiz score tracking | Low | Pending | After MVP |
 | B005 | Add flashcard revision mode | Low | Pending | After MVP |

@@ -19,6 +19,7 @@ Track user-facing changes here.
 - Dashboard recent activity sections for notes, quizzes, flashcards, and summaries
 - Responsive local MVP styling
 - DOCX note upload with local text extraction
+- PPTX note upload with local text extraction
 - Local virtual environment and requirements.txt
 - Initial project documentation
 - MVP feature scope
