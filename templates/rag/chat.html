@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Ask AI | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>Ask AI</h1>
+        <p>Ask questions using only your uploaded PDF notes.</p>
+    </div>
+</section>
+
+<section class="auth-panel wide-panel">
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Ask Question</button>
+    </form>
+</section>
+
+{% if result %}
+    <section class="answer-panel">
+        <h2>Answer</h2>
+        <p>{{ result.answer|linebreaksbr }}</p>
+        <p class="helper-text">
+            Retrieval: {{ result.retrieval_mode }}{% if not result.used_llm %}. Ollama answer generation was unavailable, so this shows the most relevant note text.{% endif %}
+        </p>
+        {% if result.sources %}
+            <h3>Sources</h3>
+            <ul>
+                {% for source in result.sources %}
+                    <li>{{ source.note_title }}, page {{ source.page_number }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Generate Flashcards | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="auth-panel wide-panel">
+    <h1>Generate Flashcards</h1>
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Generate</button>
+    </form>
+</section>
+{% endblock %}

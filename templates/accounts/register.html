@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Register | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+    <h1>Create Account</h1>
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'accounts:login' %}">Login</a>.</p>
+</section>
+{% endblock %}

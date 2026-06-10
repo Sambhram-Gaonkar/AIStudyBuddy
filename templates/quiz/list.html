@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Quizzes | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>Quizzes</h1>
+        <p>Practice questions generated from your notes.</p>
+    </div>
+    <a class="primary-action" href="{% url 'quiz:generate' %}">Generate Quiz</a>
+</section>
+
+{% if quizzes %}
+    <ul class="note-list">
+        {% for quiz in quizzes %}
+            <li>
+                <a href="{% url 'quiz:detail' quiz.pk %}">{{ quiz.title }}</a>
+                <span>{{ quiz.get_question_type_display }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No quizzes generated yet.</p>
+{% endif %}
+{% endblock %}

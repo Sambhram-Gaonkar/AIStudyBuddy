@@ -1,0 +1,6 @@
+Django==4.2.4
+pymupdf
+chromadb
+requests
+xhtml2pdf
+python-dotenv

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Summary | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>{{ summary.get_summary_type_display }}</h1>
+        <p>{{ summary.note.title }}</p>
+    </div>
+    <a class="primary-action" href="{% url 'summaries:list' %}">All Summaries</a>
+</section>
+
+<section class="answer-panel">
+    <p>{{ summary.content|linebreaksbr }}</p>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Flashcards | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>Flashcards</h1>
+        <p>Generated term and definition cards from your notes.</p>
+    </div>
+    <a class="primary-action" href="{% url 'flashcards:generate' %}">Generate Flashcards</a>
+</section>
+
+{% if notes_with_cards %}
+    <section class="quick-actions">
+        <h2>Exports</h2>
+        <div>
+            {% for note in notes_with_cards %}
+                <a href="{% url 'flashcards:csv' note.pk %}">CSV: {{ note.title }}</a>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+{% if cards %}
+    <section class="flashcard-grid">
+        {% for card in cards %}
+            <article>
+                <h2>{{ card.front }}</h2>
+                <p>{{ card.back }}</p>
+                <span>{{ card.note.title }}</span>
+            </article>
+        {% endfor %}
+    </section>
+{% else %}
+    <p>No flashcards generated yet.</p>
+{% endif %}
+{% endblock %}

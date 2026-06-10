@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload PDF | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+    <h1>Upload PDF</h1>
+    <form method="post" enctype="multipart/form-data" class="form-stack">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+</section>
+{% endblock %}

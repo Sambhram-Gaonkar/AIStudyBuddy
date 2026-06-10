@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Notes | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>Your Notes</h1>
+        <p>PDF notes uploaded on this machine.</p>
+    </div>
+    <a class="primary-action" href="{% url 'notes:upload' %}">Upload PDF</a>
+</section>
+
+{% if notes %}
+    <ul class="note-list">
+        {% for note in notes %}
+            <li>
+                <a href="{% url 'notes:detail' note.pk %}">{{ note.title }}</a>
+                <span>{{ note.chunks.count }} chunks</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No notes uploaded yet.</p>
+{% endif %}
+{% endblock %}

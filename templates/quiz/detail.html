@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ quiz.title }} | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>{{ quiz.title }}</h1>
+        <p>{{ quiz.note.title }} | {{ quiz.get_question_type_display }} | {{ quiz.get_difficulty_display }}</p>
+    </div>
+    <a class="primary-action" href="{% url 'quiz:pdf' quiz.pk %}">Download PDF</a>
+</section>
+
+<section class="answer-panel">
+    {% for question in quiz.questions.all %}
+        <article class="question-block">
+            <h2>{{ forloop.counter }}. {{ question.question }}</h2>
+            {% if question.options %}
+                <ol type="A">
+                    {% for option in question.options %}
+                        <li>{{ option }}</li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+            <p><strong>Answer:</strong> {{ question.correct_answer }}</p>
+            {% if question.explanation %}
+                <p><strong>Explanation:</strong> {{ question.explanation }}</p>
+            {% endif %}
+        </article>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>Dashboard</h1>
+        <p>Welcome back, {{ user.username }}.</p>
+    </div>
+    <a class="primary-action" href="{% url 'notes:upload' %}">Upload PDF</a>
+</section>
+
+<section class="stats-grid" aria-label="Study activity">
+    <article>
+        <span>{{ total_notes }}</span>
+        <p>Notes</p>
+    </article>
+    <article>
+        <span>{{ total_quizzes }}</span>
+        <p>Quizzes</p>
+    </article>
+    <article>
+        <span>{{ total_flashcards }}</span>
+        <p>Flashcards</p>
+    </article>
+    <article>
+        <span>{{ total_summaries }}</span>
+        <p>Summaries</p>
+    </article>
+</section>
+
+<section class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div>
+        <a href="{% url 'notes:upload' %}">Upload Notes</a>
+        <a href="{% url 'notes:list' %}">View Notes</a>
+        <a href="{% url 'rag:chat' %}">Ask AI</a>
+        <a href="{% url 'quiz:generate' %}">Generate Quiz</a>
+        <a href="{% url 'flashcards:generate' %}">Generate Flashcards</a>
+        <a href="{% url 'summaries:generate' %}">Generate Summary</a>
+    </div>
+</section>
+
+<section class="recent-list">
+    <h2>Recent Notes</h2>
+    {% if recent_notes %}
+        <ul>
+            {% for note in recent_notes %}
+                <li><a href="{% url 'notes:detail' note.pk %}">{{ note.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notes uploaded yet.</p>
+    {% endif %}
+</section>
+
+<section class="activity-grid">
+    <article>
+        <h2>Recent Quizzes</h2>
+        {% if recent_quizzes %}
+            <ul>
+                {% for quiz in recent_quizzes %}
+                    <li><a href="{% url 'quiz:detail' quiz.pk %}">{{ quiz.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No quizzes yet.</p>
+        {% endif %}
+    </article>
+    <article>
+        <h2>Recent Flashcards</h2>
+        {% if recent_flashcards %}
+            <ul>
+                {% for card in recent_flashcards %}
+                    <li>{{ card.front }} <span>{{ card.note.title }}</span></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No flashcards yet.</p>
+        {% endif %}
+    </article>
+    <article>
+        <h2>Recent Summaries</h2>
+        {% if recent_summaries %}
+            <ul>
+                {% for summary in recent_summaries %}
+                    <li><a href="{% url 'summaries:detail' summary.pk %}">{{ summary.note.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No summaries yet.</p>
+        {% endif %}
+    </article>
+</section>
+{% endblock %}

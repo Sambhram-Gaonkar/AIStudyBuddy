@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Summaries | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>Summaries</h1>
+        <p>Study summaries generated from your notes.</p>
+    </div>
+    <a class="primary-action" href="{% url 'summaries:generate' %}">Generate Summary</a>
+</section>
+
+{% if summaries %}
+    <ul class="note-list">
+        {% for summary in summaries %}
+            <li>
+                <a href="{% url 'summaries:detail' summary.pk %}">{{ summary.note.title }}</a>
+                <span>{{ summary.get_summary_type_display }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No summaries generated yet.</p>
+{% endif %}
+{% endblock %}

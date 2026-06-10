@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ quiz.title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; }
+        h1 { font-size: 20px; }
+        h2 { font-size: 14px; margin-top: 18px; }
+    </style>
+</head>
+<body>
+    <h1>{{ quiz.title }}</h1>
+    <p>Note: {{ quiz.note.title }}</p>
+    <p>Date generated: {{ quiz.created_at }}</p>
+    <p>Type: {{ quiz.get_question_type_display }} | Difficulty: {{ quiz.get_difficulty_display }}</p>
+
+    {% for question in quiz.questions.all %}
+        <h2>{{ forloop.counter }}. {{ question.question }}</h2>
+        {% if question.options %}
+            <ol type="A">
+                {% for option in question.options %}
+                    <li>{{ option }}</li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        <p><strong>Correct answer:</strong> {{ question.correct_answer }}</p>
+        {% if question.explanation %}
+            <p><strong>Explanation:</strong> {{ question.explanation }}</p>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
