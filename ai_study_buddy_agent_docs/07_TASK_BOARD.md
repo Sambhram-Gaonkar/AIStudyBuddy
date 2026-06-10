@@ -48,7 +48,7 @@ Allowed status values:
 
 | ID | Task | Priority | Status | Notes |
 |---|---|---:|---|---|
-| B001 | Add DOCX upload | Low | Pending | After MVP |
+| B001 | Add DOCX upload | Low | Finished | Local DOCX text extraction added |
 | B002 | Add PPT upload | Low | Pending | After MVP |
 | B003 | Add OCR for image notes | Low | Pending | After MVP |
 | B004 | Add quiz score tracking | Low | Pending | After MVP |

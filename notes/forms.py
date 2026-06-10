@@ -2,6 +2,11 @@ from django import forms
 
 from .models import Note
 
+ALLOWED_CONTENT_TYPES = {
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+}
+
 
 class NoteUploadForm(forms.ModelForm):
     class Meta:
@@ -10,8 +15,9 @@ class NoteUploadForm(forms.ModelForm):
 
     def clean_file(self):
         uploaded_file = self.cleaned_data['file']
-        if not uploaded_file.name.lower().endswith('.pdf'):
-            raise forms.ValidationError('Only PDF files are supported for the MVP.')
-        if uploaded_file.content_type and uploaded_file.content_type != 'application/pdf':
-            raise forms.ValidationError('The uploaded file must be a PDF.')
+        filename = uploaded_file.name.lower()
+        if not (filename.endswith('.pdf') or filename.endswith('.docx')):
+            raise forms.ValidationError('Only PDF and DOCX files are supported.')
+        if uploaded_file.content_type and uploaded_file.content_type not in ALLOWED_CONTENT_TYPES:
+            raise forms.ValidationError('The uploaded file must be a PDF or DOCX document.')
         return uploaded_file

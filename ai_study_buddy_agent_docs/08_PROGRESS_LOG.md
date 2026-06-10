@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-10
 
 Agent: Codex
+Task IDs: B001
+Summary: Added DOCX upload support using local python-docx extraction and routed PDF/DOCX uploads through a shared document reader before chunking and indexing.
+Files Changed: requirements.txt, notes/forms.py, notes/views.py, rag_engine/docx_reader.py, rag_engine/document_reader.py, templates/dashboard/home.html, templates/notes/list.html, templates/notes/upload.html, task/progress/changelog docs.
+Testing Done: Ran `venv\Scripts\python.exe manage.py check`, ran Python compileall for notes/rag_engine/config, and ran a Django client smoke test that uploaded an in-memory DOCX, verified extracted text/chunking, and asked a RAG question against the uploaded DOCX.
+Status: B001 finished.
+Next Step: Backlog can continue with B002, PPT upload.
+
+---
+
+## 2026-06-10
+
+Agent: Codex
 Task IDs: T028, T029, T030
 Summary: Added recent quizzes, flashcards, and summaries to the dashboard, improved responsive local styling, and completed the full MVP smoke test.
 Files Changed: dashboard/views.py, templates/dashboard/home.html, static/css/styles.css, task/progress/changelog/decision docs.

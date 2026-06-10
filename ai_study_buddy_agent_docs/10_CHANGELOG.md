@@ -18,6 +18,7 @@ Track user-facing changes here.
 - Bullet, paragraph, and exam-focused summary generation
 - Dashboard recent activity sections for notes, quizzes, flashcards, and summaries
 - Responsive local MVP styling
+- DOCX note upload with local text extraction
 - Local virtual environment and requirements.txt
 - Initial project documentation
 - MVP feature scope

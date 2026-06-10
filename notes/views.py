@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from rag_engine.pdf_reader import extract_pdf_pages
+from rag_engine.document_reader import extract_document_pages
 from rag_engine.text_splitter import split_pages_into_chunks
 from rag_engine.vector_store import index_note_chunks
 
@@ -24,7 +24,7 @@ def upload_note(request):
             note.user = request.user
             note.save()
 
-            pages = extract_pdf_pages(note.file.path)
+            pages = extract_document_pages(note.file.path)
             note.extracted_text = '\n\n'.join(page['text'] for page in pages)
             note.save(update_fields=['extracted_text'])
 
