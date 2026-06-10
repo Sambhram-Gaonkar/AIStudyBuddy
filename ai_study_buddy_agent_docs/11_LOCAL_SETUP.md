@@ -37,7 +37,7 @@ venv\Scripts\Activate.ps1
 ## 4. Install Dependencies
 
 ```powershell
-pip install django pymupdf chromadb requests xhtml2pdf python-dotenv
+pip install django pymupdf chromadb requests xhtml2pdf python-dotenv python-docx python-pptx Pillow pytesseract
 ```
 
 ## 5. Freeze Requirements
@@ -99,7 +99,13 @@ Test chat model:
 ollama run gemma3:1b
 ```
 
-## 11. Local-Only Reminder
+## 11. Install Tesseract OCR
+
+Image note OCR uses `pytesseract`, which requires the Tesseract executable to be installed separately and available on PATH.
+
+On Windows, install Tesseract OCR and restart the terminal before uploading image notes.
+
+## 12. Local-Only Reminder
 
 Localhost calls to Ollama are acceptable:
 

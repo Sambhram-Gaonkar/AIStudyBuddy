@@ -24,7 +24,7 @@ Next Step:
 Agent: Codex
 Task IDs: B003
 Summary: Added OCR-backed image note uploads for PNG, JPG, TIFF, and BMP files, routed image extraction through the shared document reader, and added upload error handling for missing OCR dependencies.
-Files Changed: requirements.txt, notes/forms.py, notes/views.py, notes/tests.py, rag_engine/document_reader.py, rag_engine/image_reader.py, templates/notes/upload.html, templates/notes/list.html, templates/notes/detail.html, task/progress/changelog docs.
+Files Changed: requirements.txt, notes/forms.py, notes/views.py, notes/tests.py, rag_engine/document_reader.py, rag_engine/image_reader.py, templates/notes/upload.html, templates/notes/list.html, templates/notes/detail.html, local setup/task/progress/changelog docs.
 Testing Done: Ran `venv\Scripts\python.exe manage.py check`, `venv\Scripts\python.exe manage.py test notes`, and `python -m compileall notes rag_engine config`.
 Status: B003 finished.
 Next Step: Backlog can continue with B004, quiz score tracking.
