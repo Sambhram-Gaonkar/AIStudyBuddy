@@ -6,3 +6,5 @@ xhtml2pdf
 python-dotenv
 python-docx
 python-pptx
+Pillow
+pytesseract

@@ -20,6 +20,7 @@ Track user-facing changes here.
 - Responsive local MVP styling
 - DOCX note upload with local text extraction
 - PPTX note upload with local text extraction
+- OCR image note upload for PNG, JPG, TIFF, and BMP files
 - Local virtual environment and requirements.txt
 - Initial project documentation
 - MVP feature scope
