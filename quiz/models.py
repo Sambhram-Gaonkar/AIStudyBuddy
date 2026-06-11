@@ -44,4 +44,23 @@ class QuizQuestion(models.Model):
     def __str__(self):
         return self.question[:80]
 
-# Create your models here.
+
+class QuizAttempt(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='quiz_attempts')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='attempts')
+    answers = models.JSONField(default=dict)
+    score = models.PositiveIntegerField(default=0)
+    total_questions = models.PositiveIntegerField(default=0)
+    completed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-completed_at']
+
+    @property
+    def percentage(self):
+        if not self.total_questions:
+            return 0
+        return round((self.score / self.total_questions) * 100)
+
+    def __str__(self):
+        return f'{self.quiz.title}: {self.score}/{self.total_questions}'

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Result | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="score-summary">
+    <p>Quiz Result</p>
+    <h1>{{ attempt.percentage }}%</h1>
+    <strong>{{ attempt.score }} of {{ attempt.total_questions }} correct</strong>
+</section>
+
+<section class="answer-panel">
+    {% for result in question_results %}
+        <article class="question-block result-{{ result.is_correct|yesno:'correct,incorrect' }}">
+            <h2>{{ forloop.counter }}. {{ result.question.question }}</h2>
+            <p><strong>Your answer:</strong> {{ result.submitted_answer|default:"No answer" }}</p>
+            <p><strong>Correct answer:</strong> {{ result.question.correct_answer }}</p>
+            {% if result.question.explanation %}
+                <p><strong>Explanation:</strong> {{ result.question.explanation }}</p>
+            {% endif %}
+        </article>
+    {% endfor %}
+</section>
+
+<div class="page-actions">
+    <a class="primary-action" href="{% url 'quiz:take' attempt.quiz.pk %}">Try Again</a>
+    <a class="secondary-action" href="{% url 'quiz:detail' attempt.quiz.pk %}">Back to Quiz</a>
+</div>
+{% endblock %}

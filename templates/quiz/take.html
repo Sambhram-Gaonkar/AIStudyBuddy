@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Take {{ quiz.title }} | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>{{ quiz.title }}</h1>
+        <p>Answer all questions, then submit for score.</p>
+    </div>
+</section>
+
+<form method="post" class="answer-panel quiz-attempt-form">
+    {% csrf_token %}
+    {% for question in questions %}
+        <fieldset class="question-block">
+            <legend>{{ forloop.counter }}. {{ question.question }}</legend>
+            {% if question.options %}
+                {% for option in question.options %}
+                    <label class="answer-option">
+                        <input type="radio" name="question_{{ question.pk }}" value="{{ option }}">
+                        <span>{{ option }}</span>
+                    </label>
+                {% endfor %}
+            {% else %}
+                <label>
+                    <span>Your answer</span>
+                    <textarea name="question_{{ question.pk }}" rows="3"></textarea>
+                </label>
+            {% endif %}
+        </fieldset>
+    {% endfor %}
+    <button class="primary-button" type="submit">Submit Quiz</button>
+</form>
+{% endblock %}

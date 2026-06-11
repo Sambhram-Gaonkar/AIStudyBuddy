@@ -8,7 +8,10 @@
         <h1>{{ quiz.title }}</h1>
         <p>{{ quiz.note.title }} | {{ quiz.get_question_type_display }} | {{ quiz.get_difficulty_display }}</p>
     </div>
-    <a class="primary-action" href="{% url 'quiz:pdf' quiz.pk %}">Download PDF</a>
+    <div class="header-actions">
+        <a class="primary-action" href="{% url 'quiz:take' quiz.pk %}">Take Quiz</a>
+        <a class="secondary-action" href="{% url 'quiz:pdf' quiz.pk %}">Download PDF</a>
+    </div>
 </section>
 
 <section class="answer-panel">
@@ -29,4 +32,20 @@
         </article>
     {% endfor %}
 </section>
+
+{% if attempts %}
+    <section class="recent-list">
+        <h2>Recent Scores</h2>
+        <ul class="score-list">
+            {% for attempt in attempts %}
+                <li>
+                    <a href="{% url 'quiz:attempt_result' attempt.pk %}">
+                        {{ attempt.score }}/{{ attempt.total_questions }} ({{ attempt.percentage }}%)
+                    </a>
+                    <span>{{ attempt.completed_at }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endif %}
 {% endblock %}

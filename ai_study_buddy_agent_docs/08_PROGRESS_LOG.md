@@ -19,6 +19,18 @@ Next Step:
 
 ---
 
+## 2026-06-11
+
+Agent: Codex
+Task IDs: B004
+Summary: Added quiz attempt storage, take-quiz form, answer scoring, result review, percentage display, retry flow, and recent scores on quiz detail pages.
+Files Changed: quiz/models.py, quiz/views.py, quiz/urls.py, quiz/tests.py, quiz/migrations/0002_quizattempt.py, templates/quiz/detail.html, templates/quiz/take.html, templates/quiz/attempt_result.html, static/css/styles.css, task/progress/changelog docs.
+Testing Done: Ran `venv\Scripts\python.exe manage.py check`, applied quiz migration, ran `venv\Scripts\python.exe manage.py test quiz`, ran Python compileall, and verified login, quiz submission, and 100% score result in the in-app browser.
+Status: B004 finished.
+Next Step: Backlog can continue with B005, flashcard revision mode.
+
+---
+
 ## 2026-06-10
 
 Agent: Codex
