@@ -2,78 +2,78 @@
 
 ## Foundation
 
-- [ ] Django project created
-- [ ] Virtual environment created
-- [ ] Dependencies installed
-- [ ] Apps created
-- [ ] Templates configured
-- [ ] Static files configured
-- [ ] Media files configured
+- [x] Django project created
+- [x] Virtual environment created
+- [x] Dependencies installed
+- [x] Apps created
+- [x] Templates configured
+- [x] Static files configured
+- [x] Media files configured
 
 ## Authentication
 
-- [ ] Register page works
-- [ ] Login page works
-- [ ] Logout works
-- [ ] Protected pages require login
+- [x] Register page works
+- [x] Login page works
+- [x] Logout works
+- [x] Protected pages require login
 
 ## Dashboard
 
-- [ ] Dashboard page works
-- [ ] Note count displayed
-- [ ] Quiz count displayed
-- [ ] Flashcard count displayed
-- [ ] Summary count displayed
-- [ ] Recent notes displayed
-- [ ] Quick actions added
+- [x] Dashboard page works
+- [x] Note count displayed
+- [x] Quiz count displayed
+- [x] Flashcard count displayed
+- [x] Summary count displayed
+- [x] Recent notes displayed
+- [x] Quick actions added
 
 ## Notes
 
-- [ ] PDF upload works
-- [ ] File validation works
-- [ ] PDF text extraction works
-- [ ] Notes list page works
-- [ ] Notes are user-specific
+- [x] PDF upload works
+- [x] File validation works
+- [x] PDF text extraction works
+- [x] Notes list page works
+- [x] Notes are user-specific
 
 ## RAG
 
-- [ ] Text chunking works
-- [ ] Local embeddings work
-- [ ] Vector store works
-- [ ] Retrieval works
-- [ ] Ask AI page works
-- [ ] Local LLM answer generation works
-- [ ] Source display works
-- [ ] Fallback message works
+- [x] Text chunking works
+- [x] Local embeddings work
+- [x] Vector store works
+- [x] Retrieval works
+- [x] Ask AI page works
+- [x] Local LLM answer generation works
+- [x] Source display works
+- [x] Fallback message works
 
 ## Quiz
 
-- [ ] Quiz generation page works
-- [ ] MCQs generated
-- [ ] True/False generated
-- [ ] Short answer generated
-- [ ] Quiz saved
-- [ ] Quiz result displayed
-- [ ] Quiz PDF export works
+- [x] Quiz generation page works
+- [x] MCQs generated
+- [x] True/False generated
+- [x] Short answer generated
+- [x] Quiz saved
+- [x] Quiz result displayed
+- [x] Quiz PDF export works
 
 ## Flashcards
 
-- [ ] Flashcards generated
-- [ ] Flashcards saved
-- [ ] Flashcards displayed
-- [ ] CSV export works
+- [x] Flashcards generated
+- [x] Flashcards saved
+- [x] Flashcards displayed
+- [x] CSV export works
 
 ## Summaries
 
-- [ ] Bullet summary works
-- [ ] Paragraph summary works
-- [ ] Exam summary works
-- [ ] Summary saved
+- [x] Bullet summary works
+- [x] Paragraph summary works
+- [x] Exam summary works
+- [x] Summary saved
 
 ## Final Testing
 
-- [ ] Full flow tested from register to summary
-- [ ] App runs locally without external AI API
-- [ ] README updated
-- [ ] Task board updated
-- [ ] Progress log updated
+- [x] Full flow tested from register to summary
+- [x] App runs locally without external AI API
+- [x] README updated
+- [x] Task board updated
+- [x] Progress log updated

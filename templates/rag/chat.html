@@ -35,4 +35,32 @@
         {% endif %}
     </section>
 {% endif %}
+
+<section class="chat-history">
+    <h2>Recent Questions</h2>
+    {% if recent_history %}
+        <div class="chat-history-list">
+            {% for item in recent_history %}
+                <article>
+                    <div class="chat-history-heading">
+                        <strong>{{ item.note.title }}</strong>
+                        <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"M j, Y, g:i a" }}</time>
+                    </div>
+                    <h3>{{ item.question }}</h3>
+                    <p>{{ item.answer|linebreaksbr }}</p>
+                    {% if item.source_chunks %}
+                        <p class="helper-text">
+                            Sources:
+                            {% for source in item.source_chunks %}
+                                {{ source.note_title }}, page {{ source.page_number }}{% if not forloop.last %}; {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No questions saved yet.</p>
+    {% endif %}
+</section>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 ## Phase 1 — Project Foundation
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -15,7 +15,7 @@ Tasks:
 
 ## Phase 2 — Student Dashboard
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -29,7 +29,7 @@ Tasks:
 
 ## Phase 3 — Notes Upload
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -43,7 +43,7 @@ Tasks:
 
 ## Phase 4 — RAG Indexing
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -55,7 +55,7 @@ Tasks:
 
 ## Phase 5 — RAG Chatbot
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -69,7 +69,7 @@ Tasks:
 
 ## Phase 6 — Quiz Generator
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -84,7 +84,7 @@ Tasks:
 
 ## Phase 7 — Export Quiz as PDF
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -95,7 +95,7 @@ Tasks:
 
 ## Phase 8 — Flashcard Generator
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -106,7 +106,7 @@ Tasks:
 
 ## Phase 9 — Summary Generator
 
-Status: Pending
+Status: Finished
 
 Tasks:
 
@@ -118,7 +118,7 @@ Tasks:
 
 ## Phase 10 — Testing and Polish
 
-Status: Pending
+Status: Finished
 
 Tasks:
 

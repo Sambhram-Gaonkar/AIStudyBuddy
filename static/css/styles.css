@@ -272,6 +272,43 @@ body {
     margin-top: 0;
 }
 
+.chat-history {
+    margin-top: 28px;
+}
+
+.chat-history-list {
+    display: grid;
+    gap: 12px;
+}
+
+.chat-history-list article {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #d9e2df;
+    border-radius: 8px;
+}
+
+.chat-history-list h3 {
+    margin: 14px 0 8px;
+    font-size: 18px;
+}
+
+.chat-history-list p {
+    margin: 8px 0 0;
+}
+
+.chat-history-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    color: #31544c;
+}
+
+.chat-history-heading time {
+    color: #5b6d68;
+    font-size: 14px;
+}
+
 .helper-text {
     color: #5b6d68;
     font-size: 14px;

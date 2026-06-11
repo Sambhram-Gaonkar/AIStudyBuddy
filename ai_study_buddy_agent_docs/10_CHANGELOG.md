@@ -13,6 +13,7 @@ Track user-facing changes here.
 - Authenticated student dashboard with counts, recent notes, and quick actions
 - PDF note upload, local text extraction, and note chunking
 - Local RAG chatbot page with ChromaDB retrieval, Ollama integration, and not-found fallback
+- User-owned Ask AI history with saved questions, answers, and source metadata
 - Quiz generation for MCQ, true/false, and short-answer questions with PDF export
 - Flashcard generation with CSV export
 - Bullet, paragraph, and exam-focused summary generation

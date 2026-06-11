@@ -46,6 +46,8 @@ Test cases:
 - Answer is generated from notes
 - Unknown question returns fallback message
 - User can only query own notes
+- Questions, answers, and sources are saved
+- User can only view own chat history
 
 ## 6. Quiz Testing
 

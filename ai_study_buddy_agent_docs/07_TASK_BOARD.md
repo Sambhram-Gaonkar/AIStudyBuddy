@@ -56,3 +56,4 @@ Allowed status values:
 | B006 | Add subject folders | Low | Finished | User-owned subjects, upload assignment, and note filtering |
 | B007 | Add PostgreSQL support | Low | Finished | Optional env-based PostgreSQL config; SQLite remains default |
 | B008 | Add deployment guide | Low | Finished | Waitress, WhiteNoise, environment security settings, and local/LAN deployment steps documented |
+| B009 | Add Ask AI chat history | Low | Finished | Persists user-owned questions, answers, retrieval details, and source metadata |

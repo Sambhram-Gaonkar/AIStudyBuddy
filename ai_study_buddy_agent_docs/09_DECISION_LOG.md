@@ -16,6 +16,24 @@ Impact:
 
 ---
 
+## 2026-06-11
+
+### Decision: Store Ask AI history in Django with JSON source metadata
+
+Reason:
+Questions and answers need durable, user-owned local history. Source details vary by retrieval result, so a JSON field preserves page and chunk metadata without another table.
+
+Alternatives Considered:
+
+- Keep history only in the browser session
+- Create a separate relational source table
+- Store chat history in ChromaDB
+
+Impact:
+Each valid Ask AI request creates a local database record linked to its user and note. The page can show recent history while keeping other users' questions private.
+
+---
+
 ## 2026-06-10
 
 ### Decision: Use local CSS instead of external Bootstrap assets

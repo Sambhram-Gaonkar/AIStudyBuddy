@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-11
 
 Agent: Codex
+Task IDs: B009
+Summary: Added user-owned Ask AI history with persisted questions, answers, retrieval details, source metadata, and a recent-history section. Reconciled the roadmap and MVP completion checklist with completed work.
+Files Changed: rag/models.py, rag/views.py, rag/tests.py, rag/migrations/0001_initial.py, templates/rag/chat.html, static/css/styles.css, roadmap/task/progress/decision/changelog/UI/testing/completion docs.
+Testing Done: Applied the migration, ran all 19 Django tests, ran Django system checks and Python compileall, and verified saved chat history and sources in the in-app browser.
+Status: B009 finished.
+Next Step: No pending tasks remain on the current task board.
+
+---
+
+## 2026-06-11
+
+Agent: Codex
 Task IDs: B008
 Summary: Added deployment-ready environment settings, WhiteNoise static serving, Waitress runtime support, root setup documentation, and a detailed Windows local/LAN deployment guide.
 Files Changed: config/environment.py, config/settings.py, config/tests.py, requirements.txt, .env.example, README.md, deployment/task/progress/changelog docs.
