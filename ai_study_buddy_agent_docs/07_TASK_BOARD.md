@@ -54,5 +54,5 @@ Allowed status values:
 | B004 | Add quiz score tracking | Low | Finished | Quiz attempts store answers, score, and percentage |
 | B005 | Add flashcard revision mode | Low | Finished | Tracks reviews, known answers, and mastery |
 | B006 | Add subject folders | Low | Finished | User-owned subjects, upload assignment, and note filtering |
-| B007 | Add PostgreSQL support | Low | Pending | After MVP |
+| B007 | Add PostgreSQL support | Low | Finished | Optional env-based PostgreSQL config; SQLite remains default |
 | B008 | Add deployment guide | Low | Pending | Local-first app |

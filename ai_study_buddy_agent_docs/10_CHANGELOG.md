@@ -24,6 +24,7 @@ Track user-facing changes here.
 - Quiz taking, score tracking, result review, and retry flow
 - Flashcard revision mode with review history and mastery percentage
 - User-owned subject folders with note assignment and filtering
+- Optional PostgreSQL configuration through local environment variables
 - Local virtual environment and requirements.txt
 - Initial project documentation
 - MVP feature scope

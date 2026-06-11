@@ -37,7 +37,7 @@ venv\Scripts\Activate.ps1
 ## 4. Install Dependencies
 
 ```powershell
-pip install django pymupdf chromadb requests xhtml2pdf python-dotenv python-docx python-pptx Pillow pytesseract
+pip install django pymupdf chromadb requests xhtml2pdf python-dotenv python-docx python-pptx Pillow pytesseract "psycopg[binary]"
 ```
 
 ## 5. Freeze Requirements
@@ -105,7 +105,23 @@ Image note OCR uses `pytesseract`, which requires the Tesseract executable to be
 
 On Windows, install Tesseract OCR and restart the terminal before uploading image notes.
 
-## 12. Local-Only Reminder
+## 12. Optional PostgreSQL
+
+SQLite remains the default. To use PostgreSQL:
+
+1. Copy `.env.example` to `.env`.
+2. Set `DB_ENGINE=postgresql`.
+3. Set the `POSTGRES_*` values.
+4. Create the configured database.
+5. Run:
+
+```powershell
+python manage.py migrate
+```
+
+Use `DB_ENGINE=sqlite` to return to local SQLite.
+
+## 13. Local-Only Reminder
 
 Localhost calls to Ollama are acceptable:
 

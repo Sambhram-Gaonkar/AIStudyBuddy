@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-11
 
 Agent: Codex
+Task IDs: B007
+Summary: Added optional PostgreSQL database configuration through environment variables while preserving SQLite as the default local database.
+Files Changed: config/database.py, config/settings.py, config/tests.py, requirements.txt, .env.example, local setup/task/progress/changelog docs.
+Testing Done: Installed psycopg, ran `venv\Scripts\python.exe manage.py test config`, ran `venv\Scripts\python.exe manage.py check`, and ran Python compileall. No live PostgreSQL server was available for connection testing.
+Status: B007 finished.
+Next Step: Backlog can continue with B008, deployment guide.
+
+---
+
+## 2026-06-11
+
+Agent: Codex
 Task IDs: B006
 Summary: Added user-owned subject folders, optional note subject assignment, subject creation page, note filtering, and subject labels.
 Files Changed: notes/models.py, notes/forms.py, notes/views.py, notes/urls.py, notes/tests.py, notes/migrations/0002_subject_note_subject_and_more.py, templates/notes/list.html, templates/notes/detail.html, templates/notes/subject_form.html, static/css/styles.css, task/progress/changelog docs.
