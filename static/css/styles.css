@@ -337,6 +337,56 @@ body {
     font-size: 14px;
 }
 
+.revision-card {
+    min-height: 260px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #d9e2df;
+    border-radius: 8px;
+}
+
+.revision-card h2 {
+    font-size: 30px;
+}
+
+.revision-card details {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #d9e2df;
+}
+
+.revision-card summary {
+    color: #256357;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.revision-label {
+    color: #5b6d68;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.revision-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.secondary-button {
+    min-height: 42px;
+    padding: 0 18px;
+    color: #256357;
+    background: #ffffff;
+    border: 1px solid #8eb5aa;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 .flashcard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

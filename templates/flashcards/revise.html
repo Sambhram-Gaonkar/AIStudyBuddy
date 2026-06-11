@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Revise Flashcards | AI Study Buddy{% endblock %}
+
+{% block content %}
+{% if complete %}
+    <section class="score-summary">
+        <p>Revision Complete</p>
+        <h1>{{ mastery|default:0 }}%</h1>
+        <strong>{{ total }} cards reviewed in this set</strong>
+    </section>
+    <div class="page-actions">
+        {% if total %}
+            <a class="primary-action" href="{% url 'flashcards:revise' note.pk %}">Revise Again</a>
+        {% endif %}
+        <a class="secondary-action" href="{% url 'flashcards:list' %}">Back to Flashcards</a>
+    </div>
+{% else %}
+    <section class="dashboard-header">
+        <div>
+            <h1>{{ note.title }}</h1>
+            <p>Card {{ display_position }} of {{ total }}</p>
+        </div>
+    </section>
+
+    <section class="revision-card">
+        <p class="revision-label">Front</p>
+        <h2>{{ card.front }}</h2>
+        <details>
+            <summary>Reveal Answer</summary>
+            <p>{{ card.back }}</p>
+        </details>
+    </section>
+
+    <form method="post" class="revision-actions">
+        {% csrf_token %}
+        <button class="secondary-button" type="submit" name="result" value="again">Review Again</button>
+        <button class="primary-button" type="submit" name="result" value="known">Know It</button>
+    </form>
+{% endif %}
+{% endblock %}

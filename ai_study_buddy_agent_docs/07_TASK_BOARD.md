@@ -52,7 +52,7 @@ Allowed status values:
 | B002 | Add PPT upload | Low | Finished | Local PPTX text extraction added |
 | B003 | Add OCR for image notes | Low | Finished | Supports PNG, JPG, TIFF, and BMP uploads through pytesseract |
 | B004 | Add quiz score tracking | Low | Finished | Quiz attempts store answers, score, and percentage |
-| B005 | Add flashcard revision mode | Low | Pending | After MVP |
+| B005 | Add flashcard revision mode | Low | Finished | Tracks reviews, known answers, and mastery |
 | B006 | Add subject folders | Low | Pending | After MVP |
 | B007 | Add PostgreSQL support | Low | Pending | After MVP |
 | B008 | Add deployment guide | Low | Pending | Local-first app |

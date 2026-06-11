@@ -22,6 +22,7 @@ Track user-facing changes here.
 - PPTX note upload with local text extraction
 - OCR image note upload for PNG, JPG, TIFF, and BMP files
 - Quiz taking, score tracking, result review, and retry flow
+- Flashcard revision mode with review history and mastery percentage
 - Local virtual environment and requirements.txt
 - Initial project documentation
 - MVP feature scope

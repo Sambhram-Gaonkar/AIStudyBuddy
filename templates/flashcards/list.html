@@ -13,13 +13,18 @@
 
 {% if notes_with_cards %}
     <section class="quick-actions">
-        <h2>Exports</h2>
+        <h2>Study Sets</h2>
         <div>
             {% for note in notes_with_cards %}
+                <a href="{% url 'flashcards:revise' note.pk %}">Revise: {{ note.title }}</a>
                 <a href="{% url 'flashcards:csv' note.pk %}">CSV: {{ note.title }}</a>
             {% endfor %}
         </div>
     </section>
+{% endif %}
+
+{% if review_count %}
+    <p class="helper-text">Revision history: {{ known_count }} known answers across {{ review_count }} reviews.</p>
 {% endif %}
 
 {% if cards %}

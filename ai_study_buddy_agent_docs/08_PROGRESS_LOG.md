@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-11
 
 Agent: Codex
+Task IDs: B005
+Summary: Added note-specific flashcard revision flow, reveal-answer cards, know/review-again actions, cumulative review progress, mastery percentage, and completion screen.
+Files Changed: flashcards/models.py, flashcards/views.py, flashcards/urls.py, flashcards/tests.py, flashcards/migrations/0002_flashcardprogress_and_more.py, templates/flashcards/list.html, templates/flashcards/revise.html, static/css/styles.css, task/progress/changelog docs.
+Testing Done: Ran `venv\Scripts\python.exe manage.py check`, applied flashcard migration, ran `venv\Scripts\python.exe manage.py test flashcards`, ran Python compileall, and verified flashcard revision and 100% mastery completion in the in-app browser.
+Status: B005 finished.
+Next Step: Backlog can continue with B006, subject folders.
+
+---
+
+## 2026-06-11
+
+Agent: Codex
 Task IDs: B004
 Summary: Added quiz attempt storage, take-quiz form, answer scoring, result review, percentage display, retry flow, and recent scores on quiz detail pages.
 Files Changed: quiz/models.py, quiz/views.py, quiz/urls.py, quiz/tests.py, quiz/migrations/0002_quizattempt.py, templates/quiz/detail.html, templates/quiz/take.html, templates/quiz/attempt_result.html, static/css/styles.css, task/progress/changelog docs.
