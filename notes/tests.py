@@ -9,7 +9,7 @@ from rag_engine.document_reader import extract_document_pages
 from rag_engine.image_reader import OCRUnavailable
 
 from .forms import NoteUploadForm
-from .models import Note, NoteChunk
+from .models import Note, NoteChunk, Subject
 
 
 class NoteUploadFormTests(TestCase):
@@ -101,3 +101,40 @@ class NoteUploadViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Tesseract OCR is not installed or is not available on PATH.')
         self.assertFalse(Note.objects.filter(title='Board Notes').exists())
+
+
+class SubjectFolderTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='subject-student',
+            password='pass12345',
+        )
+        self.other_user = get_user_model().objects.create_user(
+            username='other-subject-student',
+            password='pass12345',
+        )
+        self.client.force_login(self.user)
+
+    def test_create_subject_for_current_user(self):
+        response = self.client.post(reverse('notes:create_subject'), {'name': 'Physics'})
+
+        self.assertRedirects(response, reverse('notes:list'))
+        self.assertTrue(Subject.objects.filter(user=self.user, name='Physics').exists())
+
+    def test_upload_form_only_lists_current_users_subjects(self):
+        own_subject = Subject.objects.create(user=self.user, name='Biology')
+        Subject.objects.create(user=self.other_user, name='Private')
+
+        form = NoteUploadForm(user=self.user)
+
+        self.assertQuerySetEqual(form.fields['subject'].queryset, [own_subject])
+
+    def test_note_list_filters_by_owned_subject(self):
+        subject = Subject.objects.create(user=self.user, name='Chemistry')
+        Note.objects.create(user=self.user, subject=subject, title='Atoms', file='notes/atoms.pdf')
+        Note.objects.create(user=self.user, title='General', file='notes/general.pdf')
+
+        response = self.client.get(reverse('notes:list'), {'subject': subject.pk})
+
+        self.assertContains(response, 'Atoms')
+        self.assertNotContains(response, 'General')

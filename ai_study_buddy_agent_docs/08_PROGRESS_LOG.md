@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-11
 
 Agent: Codex
+Task IDs: B006
+Summary: Added user-owned subject folders, optional note subject assignment, subject creation page, note filtering, and subject labels.
+Files Changed: notes/models.py, notes/forms.py, notes/views.py, notes/urls.py, notes/tests.py, notes/migrations/0002_subject_note_subject_and_more.py, templates/notes/list.html, templates/notes/detail.html, templates/notes/subject_form.html, static/css/styles.css, task/progress/changelog docs.
+Testing Done: Ran `venv\Scripts\python.exe manage.py check`, applied notes migration, ran `venv\Scripts\python.exe manage.py test notes`, and ran Python compileall. Browser verification attempted but blocked by missing in-app virtual clipboard during login input.
+Status: B006 finished.
+Next Step: Backlog can continue with B007, PostgreSQL support.
+
+---
+
+## 2026-06-11
+
+Agent: Codex
 Task IDs: B005
 Summary: Added note-specific flashcard revision flow, reveal-answer cards, know/review-again actions, cumulative review progress, mastery percentage, and completion screen.
 Files Changed: flashcards/models.py, flashcards/views.py, flashcards/urls.py, flashcards/tests.py, flashcards/migrations/0002_flashcardprogress_and_more.py, templates/flashcards/list.html, templates/flashcards/revise.html, static/css/styles.css, task/progress/changelog docs.

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}New Subject | AI Study Buddy{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+    <h1>New Subject</h1>
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Subject</button>
+    </form>
+</section>
+{% endblock %}

@@ -6,20 +6,34 @@ from rag_engine.image_reader import OCRUnavailable
 from rag_engine.text_splitter import split_pages_into_chunks
 from rag_engine.vector_store import index_note_chunks
 
-from .forms import NoteUploadForm
-from .models import Note, NoteChunk
+from .forms import NoteUploadForm, SubjectForm
+from .models import Note, NoteChunk, Subject
 
 
 @login_required
 def note_list(request):
-    notes = Note.objects.filter(user=request.user)
-    return render(request, 'notes/list.html', {'notes': notes})
+    notes = Note.objects.filter(user=request.user).select_related('subject')
+    subjects = Subject.objects.filter(user=request.user)
+    selected_subject = request.GET.get('subject', '')
+    if selected_subject.isdigit():
+        notes = notes.filter(subject_id=selected_subject, subject__user=request.user)
+    elif selected_subject == 'none':
+        notes = notes.filter(subject__isnull=True)
+    return render(
+        request,
+        'notes/list.html',
+        {
+            'notes': notes,
+            'subjects': subjects,
+            'selected_subject': selected_subject,
+        },
+    )
 
 
 @login_required
 def upload_note(request):
     if request.method == 'POST':
-        form = NoteUploadForm(request.POST, request.FILES)
+        form = NoteUploadForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             note = form.save(commit=False)
             note.user = request.user
@@ -53,9 +67,23 @@ def upload_note(request):
                 pass
             return redirect('notes:detail', pk=note.pk)
     else:
-        form = NoteUploadForm()
+        form = NoteUploadForm(user=request.user)
 
     return render(request, 'notes/upload.html', {'form': form})
+
+
+@login_required
+def create_subject(request):
+    if request.method == 'POST':
+        form = SubjectForm(request.POST, user=request.user)
+        if form.is_valid():
+            subject = form.save(commit=False)
+            subject.user = request.user
+            subject.save()
+            return redirect('notes:list')
+    else:
+        form = SubjectForm(user=request.user)
+    return render(request, 'notes/subject_form.html', {'form': form})
 
 
 @login_required

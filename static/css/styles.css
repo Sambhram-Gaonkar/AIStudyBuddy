@@ -166,6 +166,37 @@ body {
     border-radius: 8px;
 }
 
+.subject-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.subject-filters a,
+.subject-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 10px;
+    color: #31544c;
+    background: #e7f0ed;
+    border: 1px solid #c9dcd6;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.subject-filters a.active {
+    color: #ffffff;
+    background: #256357;
+    border-color: #256357;
+}
+
+.note-list .subject-label {
+    margin-top: 6px;
+}
+
 @media (max-width: 720px) {
     .site-header,
     .dashboard-header {

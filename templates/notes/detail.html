@@ -7,6 +7,7 @@
     <div>
         <h1>{{ note.title }}</h1>
         <p>{{ chunks.count }} text chunks extracted from the uploaded note.</p>
+        {% if note.subject %}<span class="subject-label">{{ note.subject.name }}</span>{% endif %}
     </div>
     <a class="primary-action" href="{% url 'notes:list' %}">All Notes</a>
 </section>

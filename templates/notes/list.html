@@ -8,14 +8,30 @@
         <h1>Your Notes</h1>
         <p>PDF, DOCX, PPTX, and image notes uploaded on this machine.</p>
     </div>
-    <a class="primary-action" href="{% url 'notes:upload' %}">Upload Notes</a>
+    <div class="header-actions">
+        <a class="secondary-action" href="{% url 'notes:create_subject' %}">New Subject</a>
+        <a class="primary-action" href="{% url 'notes:upload' %}">Upload Notes</a>
+    </div>
 </section>
+
+{% if subjects %}
+    <nav class="subject-filters" aria-label="Filter notes by subject">
+        <a class="{% if not selected_subject %}active{% endif %}" href="{% url 'notes:list' %}">All</a>
+        {% for subject in subjects %}
+            <a class="{% if selected_subject == subject.pk|stringformat:'s' %}active{% endif %}" href="{% url 'notes:list' %}?subject={{ subject.pk }}">{{ subject.name }}</a>
+        {% endfor %}
+        <a class="{% if selected_subject == 'none' %}active{% endif %}" href="{% url 'notes:list' %}?subject=none">Unfiled</a>
+    </nav>
+{% endif %}
 
 {% if notes %}
     <ul class="note-list">
         {% for note in notes %}
             <li>
-                <a href="{% url 'notes:detail' note.pk %}">{{ note.title }}</a>
+                <div>
+                    <a href="{% url 'notes:detail' note.pk %}">{{ note.title }}</a>
+                    {% if note.subject %}<span class="subject-label">{{ note.subject.name }}</span>{% endif %}
+                </div>
                 <span>{{ note.chunks.count }} chunks</span>
             </li>
         {% endfor %}
