@@ -25,6 +25,7 @@ Track user-facing changes here.
 - Flashcard revision mode with review history and mastery percentage
 - User-owned subject folders with note assignment and filtering
 - Optional PostgreSQL configuration through local environment variables
+- Windows deployment guide with Waitress, WhiteNoise, environment-based security settings, and local/LAN instructions
 - Local virtual environment and requirements.txt
 - Initial project documentation
 - MVP feature scope

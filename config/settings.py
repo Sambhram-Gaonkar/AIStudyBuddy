@@ -16,6 +16,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from .database import build_database_config
+from .environment import env_bool, env_list
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,12 +27,19 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)o(*06m54*q3i)n!((ac7$n$e&4-$og0#uysc$1n7v_*1^rjn_'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-)o(*06m54*q3i)n!((ac7$n$e&4-$og0#uysc$1n7v_*1^rjn_',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool(os.environ.get('DJANGO_DEBUG'), default=True)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
+ALLOWED_HOSTS = env_list(
+    os.environ.get('DJANGO_ALLOWED_HOSTS'),
+    default=['127.0.0.1', 'localhost', 'testserver'],
+)
+CSRF_TRUSTED_ORIGINS = env_list(os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS'))
 
 
 # Application definition
@@ -54,6 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,6 +135,18 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': (
+            'django.contrib.staticfiles.storage.StaticFilesStorage'
+            if DEBUG
+            else 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+        ),
+    },
+}
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -139,6 +160,13 @@ OLLAMA_EMBED_MODEL = 'nomic-embed-text'
 LOGIN_REDIRECT_URL = 'dashboard:home'
 LOGOUT_REDIRECT_URL = 'accounts:login'
 LOGIN_URL = 'accounts:login'
+
+SECURE_SSL_REDIRECT = env_bool(os.environ.get('DJANGO_SECURE_SSL_REDIRECT'))
+SESSION_COOKIE_SECURE = env_bool(os.environ.get('DJANGO_SESSION_COOKIE_SECURE'))
+CSRF_COOKIE_SECURE = env_bool(os.environ.get('DJANGO_CSRF_COOKIE_SECURE'))
+SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0'))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool(os.environ.get('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS'))
+SECURE_HSTS_PRELOAD = env_bool(os.environ.get('DJANGO_SECURE_HSTS_PRELOAD'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

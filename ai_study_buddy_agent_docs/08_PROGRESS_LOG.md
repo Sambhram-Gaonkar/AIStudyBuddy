@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-11
 
 Agent: Codex
+Task IDs: B008
+Summary: Added deployment-ready environment settings, WhiteNoise static serving, Waitress runtime support, root setup documentation, and a detailed Windows local/LAN deployment guide.
+Files Changed: config/environment.py, config/settings.py, config/tests.py, requirements.txt, .env.example, README.md, deployment/task/progress/changelog docs.
+Testing Done: Installed Waitress and WhiteNoise, ran all 17 Django tests, ran Django system checks, ran a production deployment check, compiled config modules, and collected 126 static files.
+Status: B008 finished.
+Next Step: Current sprint and planned backlog are complete.
+
+---
+
+## 2026-06-11
+
+Agent: Codex
 Task IDs: B007
 Summary: Added optional PostgreSQL database configuration through environment variables while preserving SQLite as the default local database.
 Files Changed: config/database.py, config/settings.py, config/tests.py, requirements.txt, .env.example, local setup/task/progress/changelog docs.
