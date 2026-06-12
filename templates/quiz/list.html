@@ -1,26 +1,42 @@
 {% extends 'base.html' %}
 
 {% block title %}Quizzes | AI Study Buddy{% endblock %}
+{% block section_label %}Study tools{% endblock %}
+{% block page_name %}Quiz{% endblock %}
 
 {% block content %}
-<section class="dashboard-header">
+<section class="page-heading">
     <div>
-        <h1>Quizzes</h1>
-        <p>Practice questions generated from your notes.</p>
+        <span class="eyebrow">Test your recall</span>
+        <h1>Quiz Library</h1>
+        <p>Practice questions generated from your uploaded notes.</p>
     </div>
-    <a class="primary-action" href="{% url 'quiz:generate' %}">Generate Quiz</a>
+    <a class="primary-action" href="{% url 'quiz:generate' %}">+ Generate Quiz</a>
 </section>
 
 {% if quizzes %}
-    <ul class="note-list">
+    <section class="library-grid">
         {% for quiz in quizzes %}
-            <li>
-                <a href="{% url 'quiz:detail' quiz.pk %}">{{ quiz.title }}</a>
-                <span>{{ quiz.get_question_type_display }}</span>
-            </li>
+            <article class="library-card">
+                <span class="eyebrow">{{ quiz.get_question_type_display }}</span>
+                <h2><a href="{% url 'quiz:detail' quiz.pk %}">{{ quiz.title }}</a></h2>
+                <p>{{ quiz.note.title }}</p>
+                <div class="card-meta">
+                    <span>{{ quiz.get_difficulty_display }}</span>
+                    <span>{{ quiz.questions.count }} questions</span>
+                </div>
+                <div class="card-actions">
+                    <a class="primary-action" href="{% url 'quiz:take' quiz.pk %}">Take Quiz</a>
+                    <a href="{% url 'quiz:detail' quiz.pk %}">Review</a>
+                </div>
+            </article>
         {% endfor %}
-    </ul>
+    </section>
 {% else %}
-    <p>No quizzes generated yet.</p>
+    <div class="empty-state">
+        <strong>No quizzes generated yet</strong>
+        <p>Create one from an uploaded note.</p>
+        <a href="{% url 'quiz:generate' %}">Generate quiz</a>
+    </div>
 {% endif %}
 {% endblock %}

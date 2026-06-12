@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ quiz.title }} | AI Study Buddy{% endblock %}
+{% block section_label %}Quiz review{% endblock %}
+{% block page_name %}{{ quiz.note.title }}{% endblock %}
 
 {% block content %}
-<section class="dashboard-header">
+<section class="page-heading">
     <div>
+        <span class="eyebrow">{{ quiz.get_question_type_display }}</span>
         <h1>{{ quiz.title }}</h1>
-        <p>{{ quiz.note.title }} | {{ quiz.get_question_type_display }} | {{ quiz.get_difficulty_display }}</p>
+        <p>{{ quiz.note.title }} | {{ quiz.get_difficulty_display }} | {{ quiz.questions.count }} questions</p>
     </div>
     <div class="header-actions">
         <a class="primary-action" href="{% url 'quiz:take' quiz.pk %}">Take Quiz</a>
@@ -14,10 +17,11 @@
     </div>
 </section>
 
-<section class="answer-panel">
+<section class="question-review-list">
     {% for question in quiz.questions.all %}
-        <article class="question-block">
-            <h2>{{ forloop.counter }}. {{ question.question }}</h2>
+        <article class="question-review-card">
+            <span class="eyebrow">Question {{ forloop.counter }}</span>
+            <h2>{{ question.question }}</h2>
             {% if question.options %}
                 <ol type="A">
                     {% for option in question.options %}

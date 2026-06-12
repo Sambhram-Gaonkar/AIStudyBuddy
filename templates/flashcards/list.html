@@ -1,43 +1,70 @@
 {% extends 'base.html' %}
 
 {% block title %}Flashcards | AI Study Buddy{% endblock %}
+{% block section_label %}Study tools{% endblock %}
+{% block page_name %}Flashcards{% endblock %}
 
 {% block content %}
-<section class="dashboard-header">
+<section class="page-heading">
     <div>
-        <h1>Flashcards</h1>
-        <p>Generated term and definition cards from your notes.</p>
+        <span class="eyebrow">Active recall</span>
+        <h1>Flashcard Library</h1>
+        <p>Review generated terms, reveal definitions, or start a tracked revision session.</p>
     </div>
-    <a class="primary-action" href="{% url 'flashcards:generate' %}">Generate Flashcards</a>
+    <a class="primary-action" href="{% url 'flashcards:generate' %}">+ Generate Cards</a>
 </section>
 
 {% if notes_with_cards %}
-    <section class="quick-actions">
-        <h2>Study Sets</h2>
+    <section class="study-set-bar">
         <div>
-            {% for note in notes_with_cards %}
-                <a href="{% url 'flashcards:revise' note.pk %}">Revise: {{ note.title }}</a>
-                <a href="{% url 'flashcards:csv' note.pk %}">CSV: {{ note.title }}</a>
-            {% endfor %}
+            <span class="eyebrow">Study sets</span>
+            <div class="study-set-links">
+                {% for note in notes_with_cards %}
+                    <a href="{% url 'flashcards:revise' note.pk %}">{{ note.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="review-metrics">
+            <span><b>{{ known_count }}</b> known</span>
+            <span><b>{{ review_count }}</b> reviews</span>
         </div>
     </section>
-{% endif %}
-
-{% if review_count %}
-    <p class="helper-text">Revision history: {{ known_count }} known answers across {{ review_count }} reviews.</p>
 {% endif %}
 
 {% if cards %}
     <section class="flashcard-grid">
         {% for card in cards %}
-            <article>
-                <h2>{{ card.front }}</h2>
-                <p>{{ card.back }}</p>
-                <span>{{ card.note.title }}</span>
-            </article>
+            <details class="flashcard">
+                <summary>
+                    <span class="eyebrow">Term</span>
+                    <strong>{{ card.front }}</strong>
+                    <small>Click to reveal</small>
+                </summary>
+                <div class="flashcard-answer">
+                    <span class="eyebrow">Definition</span>
+                    <p>{{ card.back }}</p>
+                    <div>
+                        <small>{{ card.note.title }}</small>
+                        <a href="{% url 'flashcards:revise' card.note.pk %}">Revise set</a>
+                    </div>
+                </div>
+            </details>
         {% endfor %}
     </section>
 {% else %}
-    <p>No flashcards generated yet.</p>
+    <div class="empty-state">
+        <strong>No flashcards yet</strong>
+        <p>Generate a study set from one of your notes.</p>
+        <a href="{% url 'flashcards:generate' %}">Generate flashcards</a>
+    </div>
+{% endif %}
+
+{% if notes_with_cards %}
+    <section class="export-row">
+        <span class="eyebrow">Export</span>
+        {% for note in notes_with_cards %}
+            <a class="secondary-action" href="{% url 'flashcards:csv' note.pk %}">CSV: {{ note.title }}</a>
+        {% endfor %}
+    </section>
 {% endif %}
 {% endblock %}

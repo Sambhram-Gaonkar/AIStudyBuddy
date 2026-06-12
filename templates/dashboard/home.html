@@ -1,96 +1,160 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard | AI Study Buddy{% endblock %}
+{% block title %}Progress | AI Study Buddy{% endblock %}
+{% block section_label %}Learning hub{% endblock %}
+{% block page_name %}Progress{% endblock %}
 
 {% block content %}
-<section class="dashboard-header">
+<section class="page-heading">
     <div>
-        <h1>Dashboard</h1>
-        <p>Welcome back, {{ user.username }}.</p>
+        <span class="eyebrow">Your study overview</span>
+        <h1>Performance Dashboard</h1>
+        <p>Track activity, review quiz performance, and choose your next study task.</p>
     </div>
-    <a class="primary-action" href="{% url 'notes:upload' %}">Upload Notes</a>
+    <a class="primary-action" href="{% url 'notes:upload' %}">+ Upload Notes</a>
 </section>
 
-<section class="stats-grid" aria-label="Study activity">
-    <article>
-        <span>{{ total_notes }}</span>
-        <p>Notes</p>
+<section class="metric-grid" aria-label="Study activity">
+    <article class="metric-card">
+        <span class="metric-label">Total quizzes</span>
+        <strong>{{ attempt_count }}</strong>
+        <small>{{ total_quizzes }} generated</small>
     </article>
-    <article>
-        <span>{{ total_quizzes }}</span>
-        <p>Quizzes</p>
+    <article class="metric-card">
+        <span class="metric-label">Average score</span>
+        <strong>{{ average_score }}%</strong>
+        <small>Across completed attempts</small>
     </article>
-    <article>
-        <span>{{ total_flashcards }}</span>
-        <p>Flashcards</p>
+    <article class="metric-card">
+        <span class="metric-label">Study notes</span>
+        <strong>{{ total_notes }}</strong>
+        <small>Local source documents</small>
     </article>
-    <article>
-        <span>{{ total_summaries }}</span>
-        <p>Summaries</p>
+    <article class="metric-card">
+        <span class="metric-label">Flashcards</span>
+        <strong>{{ total_flashcards }}</strong>
+        <small>{{ total_summaries }} saved summaries</small>
     </article>
 </section>
 
-<section class="quick-actions">
-    <h2>Quick Actions</h2>
-    <div>
-        <a href="{% url 'notes:upload' %}">Upload Notes</a>
-        <a href="{% url 'notes:list' %}">View Notes</a>
-        <a href="{% url 'rag:chat' %}">Ask AI</a>
-        <a href="{% url 'quiz:generate' %}">Generate Quiz</a>
-        <a href="{% url 'flashcards:generate' %}">Generate Flashcards</a>
-        <a href="{% url 'summaries:generate' %}">Generate Summary</a>
+<section class="dashboard-layout">
+    <div class="dashboard-main">
+        <article class="panel performance-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow">Quiz analytics</span>
+                    <h2>Performance by topic</h2>
+                </div>
+                <span class="meta-text">Recent attempts</span>
+            </div>
+            {% if topic_performance %}
+                <div class="bar-chart" aria-label="Quiz performance by topic">
+                    {% for topic in topic_performance %}
+                        <div class="bar-column">
+                            <span class="bar-value">{{ topic.percentage }}%</span>
+                            <div class="bar-track">
+                                <span class="bar-fill {% if topic.percentage < 60 %}weak{% endif %}" style="height: {{ topic.percentage }}%"></span>
+                            </div>
+                            <span class="bar-label">{{ topic.quiz__note__title|truncatechars:14 }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <strong>No quiz results yet</strong>
+                    <p>Take a generated quiz to start performance tracking.</p>
+                    <a href="{% url 'quiz:list' %}">Open quizzes</a>
+                </div>
+            {% endif %}
+        </article>
+
+        <article class="panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow">Latest work</span>
+                    <h2>Recent results</h2>
+                </div>
+                <a href="{% url 'quiz:list' %}">View quizzes</a>
+            </div>
+            {% if recent_attempts %}
+                <div class="result-list">
+                    {% for attempt in recent_attempts %}
+                        <a href="{% url 'quiz:attempt_result' attempt.pk %}">
+                            <span class="result-status {% if attempt.percentage >= 60 %}good{% else %}weak{% endif %}">{{ attempt.percentage }}%</span>
+                            <span>
+                                <strong>{{ attempt.quiz.note.title }}</strong>
+                                <small>{{ attempt.completed_at|date:"M j, Y, g:i a" }}</small>
+                            </span>
+                            <b>{{ attempt.score }}/{{ attempt.total_questions }}</b>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="muted-copy">No completed quizzes yet.</p>
+            {% endif %}
+        </article>
+
+        <article class="panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow">Source library</span>
+                    <h2>Recent notes</h2>
+                </div>
+                <a href="{% url 'notes:list' %}">View all</a>
+            </div>
+            {% if recent_notes %}
+                <div class="compact-list">
+                    {% for note in recent_notes %}
+                        <a href="{% url 'notes:detail' note.pk %}">
+                            <span class="file-mark">N</span>
+                            <strong>{{ note.title }}</strong>
+                            <small>{{ note.uploaded_at|date:"M j" }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="muted-copy">No notes uploaded yet.</p>
+            {% endif %}
+        </article>
     </div>
-</section>
 
-<section class="recent-list">
-    <h2>Recent Notes</h2>
-    {% if recent_notes %}
-        <ul>
-            {% for note in recent_notes %}
-                <li><a href="{% url 'notes:detail' note.pk %}">{{ note.title }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No notes uploaded yet.</p>
-    {% endif %}
-</section>
+    <aside class="dashboard-aside">
+        <article class="panel weak-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow warning">Needs review</span>
+                    <h2>Weak topics</h2>
+                </div>
+            </div>
+            {% if weak_topics %}
+                <div class="weak-list">
+                    {% for topic in weak_topics %}
+                        <div>
+                            <span><strong>{{ topic.quiz__note__title }}</strong><b>{{ topic.percentage }}%</b></span>
+                            <div class="slim-progress"><span style="width: {{ topic.percentage }}%"></span></div>
+                            <small>Generate another quiz for focused practice.</small>
+                        </div>
+                    {% endfor %}
+                </div>
+                <a class="secondary-action full-action" href="{% url 'quiz:generate' %}">Generate Review Quiz</a>
+            {% else %}
+                <p class="muted-copy">No topics below 60%.</p>
+            {% endif %}
+        </article>
 
-<section class="activity-grid">
-    <article>
-        <h2>Recent Quizzes</h2>
-        {% if recent_quizzes %}
-            <ul>
-                {% for quiz in recent_quizzes %}
-                    <li><a href="{% url 'quiz:detail' quiz.pk %}">{{ quiz.title }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No quizzes yet.</p>
-        {% endif %}
-    </article>
-    <article>
-        <h2>Recent Flashcards</h2>
-        {% if recent_flashcards %}
-            <ul>
-                {% for card in recent_flashcards %}
-                    <li>{{ card.front }} <span>{{ card.note.title }}</span></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No flashcards yet.</p>
-        {% endif %}
-    </article>
-    <article>
-        <h2>Recent Summaries</h2>
-        {% if recent_summaries %}
-            <ul>
-                {% for summary in recent_summaries %}
-                    <li><a href="{% url 'summaries:detail' summary.pk %}">{{ summary.note.title }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No summaries yet.</p>
-        {% endif %}
-    </article>
+        <article class="study-tip">
+            <span class="eyebrow">Study tip</span>
+            <h2>Space your learning</h2>
+            <p>Short, repeated review sessions usually beat one long cram session.</p>
+            <a href="{% url 'flashcards:list' %}">Start flashcard review</a>
+        </article>
+
+        <article class="panel quick-panel">
+            <span class="eyebrow">Quick actions</span>
+            <a href="{% url 'rag:chat' %}">Ask Chat Tutor <span>AI</span></a>
+            <a href="{% url 'quiz:generate' %}">Generate Quiz <span>Q</span></a>
+            <a href="{% url 'summaries:generate' %}">Create Summary <span>S</span></a>
+        </article>
+    </aside>
 </section>
 {% endblock %}

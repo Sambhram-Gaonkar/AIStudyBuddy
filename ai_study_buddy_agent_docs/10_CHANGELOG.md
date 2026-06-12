@@ -14,6 +14,7 @@ Track user-facing changes here.
 - PDF note upload, local text extraction, and note chunking
 - Local RAG chatbot page with ChromaDB retrieval, Ollama integration, and not-found fallback
 - User-owned Ask AI history with saved questions, answers, and source metadata
+- Responsive Stitch-inspired academic interface with sidebar navigation, mobile bottom navigation, progress analytics, tutor chat, quiz cards, and revealable flashcards
 - Quiz generation for MCQ, true/false, and short-answer questions with PDF export
 - Flashcard generation with CSV export
 - Bullet, paragraph, and exam-focused summary generation
@@ -38,6 +39,8 @@ Track user-facing changes here.
 ### Changed
 
 - Dashboard now shows generated study activity, not only note activity
+- Dashboard now calculates quiz average, topic performance, weak topics, and recent results from stored attempts
+- Shared app navigation, forms, cards, lists, and study pages now use the supplied clean interface design system
 
 ### Fixed
 

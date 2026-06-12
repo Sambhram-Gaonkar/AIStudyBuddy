@@ -1,35 +1,53 @@
 {% extends 'base.html' %}
 
 {% block title %}Take {{ quiz.title }} | AI Study Buddy{% endblock %}
+{% block section_label %}Quiz mode{% endblock %}
+{% block page_name %}{{ quiz.note.title }}{% endblock %}
 
 {% block content %}
-<section class="dashboard-header">
+<section class="page-heading quiz-heading">
     <div>
+        <span class="eyebrow">{{ quiz.get_difficulty_display }} difficulty</span>
         <h1>{{ quiz.title }}</h1>
-        <p>Answer all questions, then submit for score.</p>
+        <p>Answer each question, then submit once for your score.</p>
     </div>
+    <span class="count-pill">{{ questions|length }} questions</span>
 </section>
 
-<form method="post" class="answer-panel quiz-attempt-form">
+<div class="quiz-progress">
+    <span>Quiz progress</span>
+    <div><i></i></div>
+    <small>Answers save when submitted</small>
+</div>
+
+<form method="post" class="quiz-attempt-form">
     {% csrf_token %}
     {% for question in questions %}
-        <fieldset class="question-block">
-            <legend>{{ forloop.counter }}. {{ question.question }}</legend>
+        <fieldset class="quiz-question-card">
+            <legend>
+                <span class="eyebrow">Question {{ forloop.counter }}</span>
+                {{ question.question }}
+            </legend>
             {% if question.options %}
-                {% for option in question.options %}
-                    <label class="answer-option">
-                        <input type="radio" name="question_{{ question.pk }}" value="{{ option }}">
-                        <span>{{ option }}</span>
-                    </label>
-                {% endfor %}
+                <div class="answer-options">
+                    {% for option in question.options %}
+                        <label class="answer-option">
+                            <input type="radio" name="question_{{ question.pk }}" value="{{ option }}">
+                            <span>{{ option }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
             {% else %}
-                <label>
+                <label class="short-answer">
                     <span>Your answer</span>
-                    <textarea name="question_{{ question.pk }}" rows="3"></textarea>
+                    <textarea name="question_{{ question.pk }}" rows="4"></textarea>
                 </label>
             {% endif %}
         </fieldset>
     {% endfor %}
-    <button class="primary-button" type="submit">Submit Quiz</button>
+    <div class="sticky-submit">
+        <span>Review answers before submitting.</span>
+        <button class="primary-button" type="submit">Submit Quiz</button>
+    </div>
 </form>
 {% endblock %}

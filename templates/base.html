@@ -7,30 +7,87 @@
     <title>{% block title %}AI Study Buddy{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-    <header class="site-header">
-        <a class="brand" href="{% url 'dashboard:home' %}">AI Study Buddy</a>
-        <nav class="site-nav" aria-label="Main navigation">
-            {% if user.is_authenticated %}
-                <span class="nav-user">{{ user.username }}</span>
-                <a href="{% url 'dashboard:home' %}">Dashboard</a>
-                <a href="{% url 'notes:list' %}">Notes</a>
-                <a href="{% url 'rag:chat' %}">Ask AI</a>
-                <a href="{% url 'quiz:list' %}">Quizzes</a>
-                <a href="{% url 'flashcards:list' %}">Flashcards</a>
-                <a href="{% url 'summaries:list' %}">Summaries</a>
+<body class="{% if user.is_authenticated %}app-shell{% else %}auth-shell{% endif %}">
+    {% if user.is_authenticated %}
+        <aside class="sidebar">
+            <a class="brand" href="{% url 'dashboard:home' %}">AI Study Buddy</a>
+
+            <div class="workspace-card">
+                <span class="workspace-icon" aria-hidden="true">AI</span>
+                <div>
+                    <span class="eyebrow">Current workspace</span>
+                    <strong>{{ user.username }}</strong>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Main navigation">
+                <a class="{% if request.resolver_match.namespace == 'dashboard' %}active{% endif %}" href="{% url 'dashboard:home' %}">
+                    <span class="nav-icon" aria-hidden="true">P</span>Progress
+                </a>
+                <a class="{% if request.resolver_match.namespace == 'notes' %}active{% endif %}" href="{% url 'notes:list' %}">
+                    <span class="nav-icon" aria-hidden="true">N</span>Notes
+                </a>
+                <a class="{% if request.resolver_match.namespace == 'rag' %}active{% endif %}" href="{% url 'rag:chat' %}">
+                    <span class="nav-icon" aria-hidden="true">AI</span>Chat Tutor
+                </a>
+                <a class="{% if request.resolver_match.namespace == 'quiz' %}active{% endif %}" href="{% url 'quiz:list' %}">
+                    <span class="nav-icon" aria-hidden="true">Q</span>Quiz
+                </a>
+                <a class="{% if request.resolver_match.namespace == 'flashcards' %}active{% endif %}" href="{% url 'flashcards:list' %}">
+                    <span class="nav-icon" aria-hidden="true">FC</span>Flashcards
+                </a>
+                <a class="{% if request.resolver_match.namespace == 'summaries' %}active{% endif %}" href="{% url 'summaries:list' %}">
+                    <span class="nav-icon" aria-hidden="true">S</span>Summary
+                </a>
+            </nav>
+
+            <a class="sidebar-primary" href="{% url 'notes:upload' %}">
+                <span aria-hidden="true">+</span> Upload Notes
+            </a>
+
+            <div class="sidebar-footer">
+                <span class="signed-in-user">{{ user.username }}</span>
                 <form method="post" action="{% url 'accounts:logout' %}">
                     {% csrf_token %}
-                    <button class="link-button" type="submit">Logout</button>
+                    <button class="sidebar-link" type="submit">Sign Out</button>
                 </form>
-            {% else %}
+            </div>
+        </aside>
+
+        <div class="app-frame">
+            <header class="topbar">
+                <div>
+                    <span class="eyebrow">{% block section_label %}Learning hub{% endblock %}</span>
+                    <strong>{% block page_name %}AI Study Buddy{% endblock %}</strong>
+                </div>
+                <div class="topbar-actions">
+                    <a class="icon-action" href="{% url 'notes:upload' %}" title="Upload notes" aria-label="Upload notes">+</a>
+                    <span class="user-avatar" aria-label="Signed in as {{ user.username }}">{{ user.username|first|upper }}</span>
+                </div>
+            </header>
+            <main class="page">
+    {% else %}
+        <header class="public-header">
+            <a class="brand" href="{% url 'dashboard:home' %}">AI Study Buddy</a>
+            <nav>
                 <a href="{% url 'accounts:login' %}">Login</a>
-                <a href="{% url 'accounts:register' %}">Register</a>
-            {% endif %}
-        </nav>
-    </header>
-    <main class="page">
+                <a class="primary-action" href="{% url 'accounts:register' %}">Create account</a>
+            </nav>
+        </header>
+        <main class="public-page">
+    {% endif %}
         {% block content %}{% endblock %}
     </main>
+    {% if user.is_authenticated %}
+        </div>
+
+        <nav class="mobile-nav" aria-label="Mobile navigation">
+            <a class="{% if request.resolver_match.namespace == 'dashboard' %}active{% endif %}" href="{% url 'dashboard:home' %}"><span>P</span>Progress</a>
+            <a class="{% if request.resolver_match.namespace == 'rag' %}active{% endif %}" href="{% url 'rag:chat' %}"><span>AI</span>Tutor</a>
+            <a class="{% if request.resolver_match.namespace == 'quiz' %}active{% endif %}" href="{% url 'quiz:list' %}"><span>Q</span>Quiz</a>
+            <a class="{% if request.resolver_match.namespace == 'flashcards' %}active{% endif %}" href="{% url 'flashcards:list' %}"><span>FC</span>Cards</a>
+            <a class="{% if request.resolver_match.namespace == 'notes' %}active{% endif %}" href="{% url 'notes:list' %}"><span>N</span>Notes</a>
+        </nav>
+    {% endif %}
 </body>
 </html>

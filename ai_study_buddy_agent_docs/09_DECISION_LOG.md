@@ -16,6 +16,24 @@ Impact:
 
 ---
 
+## 2026-06-12
+
+### Decision: Implement the Stitch design with local CSS and existing Django data
+
+Reason:
+The provided design defines an academic minimalist visual system, but its exported HTML depends on Tailwind, Google Fonts, remote images, and mock data. The app must stay local-first and preserve existing Django workflows.
+
+Alternatives Considered:
+
+- Copy the exported Tailwind HTML directly
+- Load fonts, icons, and images from external CDNs
+- Apply only palette changes without restructuring pages
+
+Impact:
+The app now follows the supplied layout, spacing, color, and component direction using one local stylesheet, system fonts, real database metrics, and existing routes. No new cloud frontend dependency was introduced.
+
+---
+
 ## 2026-06-11
 
 ### Decision: Store Ask AI history in Django with JSON source metadata

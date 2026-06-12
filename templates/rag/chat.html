@@ -1,66 +1,87 @@
 {% extends 'base.html' %}
 
-{% block title %}Ask AI | AI Study Buddy{% endblock %}
+{% block title %}Chat Tutor | AI Study Buddy{% endblock %}
+{% block section_label %}Tutor workspace{% endblock %}
+{% block page_name %}Chat Tutor{% endblock %}
 
 {% block content %}
-<section class="dashboard-header">
+<section class="page-heading chat-heading">
     <div>
-        <h1>Ask AI</h1>
-        <p>Ask questions using only your uploaded PDF notes.</p>
+        <span class="eyebrow">Grounded in your notes</span>
+        <h1>Chat Tutor</h1>
+        <p>Ask focused questions. Answers use only your uploaded study material.</p>
     </div>
 </section>
 
-<section class="auth-panel wide-panel">
-    <form method="post" class="form-stack">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Ask Question</button>
-    </form>
-</section>
-
-{% if result %}
-    <section class="answer-panel">
-        <h2>Answer</h2>
-        <p>{{ result.answer|linebreaksbr }}</p>
-        <p class="helper-text">
-            Retrieval: {{ result.retrieval_mode }}{% if not result.used_llm %}. Ollama answer generation was unavailable, so this shows the most relevant note text.{% endif %}
-        </p>
-        {% if result.sources %}
-            <h3>Sources</h3>
-            <ul>
-                {% for source in result.sources %}
-                    <li>{{ source.note_title }}, page {{ source.page_number }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </section>
-{% endif %}
-
-<section class="chat-history">
-    <h2>Recent Questions</h2>
-    {% if recent_history %}
-        <div class="chat-history-list">
-            {% for item in recent_history %}
-                <article>
-                    <div class="chat-history-heading">
-                        <strong>{{ item.note.title }}</strong>
-                        <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"M j, Y, g:i a" }}</time>
+<section class="chat-canvas">
+    {% if result %}
+        <article class="chat-message student-message">
+            <div class="message-meta"><span>You</span><span>Now</span></div>
+            <div class="message-bubble">{{ form.question.value }}</div>
+        </article>
+        <article class="chat-message tutor-message">
+            <div class="message-meta"><span>Tutor</span><span>{{ result.retrieval_mode }}</span></div>
+            <div class="message-bubble">
+                <p>{{ result.answer|linebreaksbr }}</p>
+                {% if result.sources %}
+                    <div class="source-list">
+                        <span class="eyebrow">Sources</span>
+                        {% for source in result.sources %}
+                            <small>{{ source.note_title }}, page {{ source.page_number }}</small>
+                        {% endfor %}
                     </div>
-                    <h3>{{ item.question }}</h3>
-                    <p>{{ item.answer|linebreaksbr }}</p>
-                    {% if item.source_chunks %}
-                        <p class="helper-text">
-                            Sources:
-                            {% for source in item.source_chunks %}
-                                {{ source.note_title }}, page {{ source.page_number }}{% if not forloop.last %}; {% endif %}
-                            {% endfor %}
-                        </p>
-                    {% endif %}
+                {% endif %}
+            </div>
+        </article>
+    {% endif %}
+
+    {% if recent_history %}
+        {% for item in recent_history %}
+            {% if not result or not forloop.first %}
+                <article class="chat-message student-message">
+                    <div class="message-meta">
+                        <span>You</span>
+                        <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"M j, g:i a" }}</time>
+                    </div>
+                    <div class="message-bubble">{{ item.question }}</div>
                 </article>
-            {% endfor %}
+                <article class="chat-message tutor-message">
+                    <div class="message-meta"><span>Tutor</span><span>{{ item.note.title }}</span></div>
+                    <div class="message-bubble">
+                        <p>{{ item.answer|linebreaksbr }}</p>
+                        {% if item.source_chunks %}
+                            <div class="source-list">
+                                <span class="eyebrow">Sources</span>
+                                {% for source in item.source_chunks %}
+                                    <small>{{ source.note_title }}, page {{ source.page_number }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
+    {% elif not result %}
+        <div class="empty-state chat-empty">
+            <span class="empty-mark">AI</span>
+            <strong>Start with a question</strong>
+            <p>Select one note below, then ask about a concept, definition, or exam topic.</p>
         </div>
-    {% else %}
-        <p>No questions saved yet.</p>
     {% endif %}
 </section>
+
+<form method="post" class="chat-composer">
+    {% csrf_token %}
+    <div class="composer-note">
+        {{ form.note.label_tag }}
+        {{ form.note }}
+    </div>
+    <div class="composer-question">
+        {{ form.question.label_tag }}
+        {{ form.question }}
+        <button type="submit" aria-label="Ask question">Ask</button>
+    </div>
+    {% if form.errors %}<div class="form-errors">{{ form.errors }}</div>{% endif %}
+    <p>Local AI may make mistakes. Verify important answers against your notes.</p>
+</form>
 {% endblock %}
