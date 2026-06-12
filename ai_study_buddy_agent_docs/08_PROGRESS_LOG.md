@@ -23,7 +23,7 @@ Next Step:
 
 Agent: Codex
 Task IDs: B013
-Summary: Created a consolidated technical reference explaining the implemented architecture, document pipeline, RAG flow, Ollama models, feature workflows, database relationships, privacy, offline fallbacks, testing, limitations, and report-ready project content.
+Summary: Created a consolidated technical reference explaining the implemented architecture, document pipeline, RAG flow, Ollama models, feature workflows, database relationships, privacy, offline fallbacks, testing, limitations, and report-ready project content. Expanded it with a detailed distinction between retrieval, generation, current fallback RAG, full Ollama RAG, and the exact role of each local model.
 Files Changed: PROJECT_WORKING.md, README.md, task/progress documentation.
 Testing Done: Cross-checked the document against current settings, models, upload views, document readers, retrieval engine, generation services, dashboard logic, and full-workflow tests. Ran Git whitespace validation.
 Status: B013 finished.

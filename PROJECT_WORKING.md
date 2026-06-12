@@ -199,6 +199,59 @@ Overlap reduces the chance that an important sentence is split across two chunks
 
 RAG means Retrieval-Augmented Generation. Instead of asking the model to answer from general knowledge alone, the application retrieves relevant note sections and includes them in the prompt.
 
+### RAG Does Not Generate Content by Itself
+
+RAG is an architecture or workflow, not a model. It combines two separate operations:
+
+1. **Retrieval:** Find relevant information from the uploaded notes.
+2. **Generation:** Give that information to a language model so it can write a useful answer.
+
+The responsibilities in this project are:
+
+| Component | Responsibility |
+|---|---|
+| Django | Controls the workflow, validates ownership, builds prompts, stores results, and renders pages |
+| PyMuPDF/DOCX/PPTX/OCR readers | Convert uploaded files into text |
+| `NoteChunk` and ChromaDB | Store searchable note sections |
+| `nomic-embed-text` through Ollama | Converts text into vectors for semantic retrieval |
+| Retrieval code | Selects the note chunks most relevant to the question |
+| `gemma3:1b` through Ollama | Reads the retrieved context and writes the final natural-language answer |
+
+Therefore:
+
+```text
+RAG = retrieval + context preparation + model generation
+```
+
+Ollama is not a replacement for RAG. Ollama is the local runtime that executes the two models used inside the RAG workflow.
+
+### Simple Example
+
+Assume an uploaded biology note contains:
+
+```text
+Photosynthesis converts sunlight into chemical energy.
+```
+
+The student asks:
+
+```text
+What does photosynthesis convert?
+```
+
+The process is:
+
+1. Retrieval locates the chunk containing the photosynthesis sentence.
+2. Django creates a prompt containing that chunk and the question.
+3. `gemma3:1b` receives the prompt through Ollama.
+4. The model generates a readable answer such as:
+
+```text
+Photosynthesis converts sunlight into chemical energy.
+```
+
+Without retrieval, the model would answer from its pretrained knowledge and might ignore the uploaded note. Without the language model, retrieval can only return the original matching text rather than compose a clear answer.
+
 ```mermaid
 sequenceDiagram
     participant U as User
@@ -216,6 +269,85 @@ sequenceDiagram
     G-->>D: Grounded answer
     D-->>U: Answer and source page details
 ```
+
+### How RAG Works Before Ollama Is Installed
+
+The application currently runs a reduced fallback form of RAG:
+
+```mermaid
+flowchart LR
+    A[Student question] --> B[Keyword comparison]
+    B --> C[Matching NoteChunk rows]
+    C --> D[Return matching note text]
+    D --> E[Display sources and save chat history]
+```
+
+Detailed steps:
+
+1. The student selects one processed note and asks a question.
+2. Django reads the note's `NoteChunk` rows from the relational database.
+3. The question is split into words.
+4. Common stopwords such as `what`, `the`, and `from` are removed.
+5. Each chunk is scored by the number of matching terms.
+6. Up to five best chunks are selected.
+7. Because `gemma3:1b` is unavailable, the application returns up to 1200 characters of retrieved context.
+8. The question, returned context, source pages, and retrieval mode are saved in `ChatHistory`.
+
+This mode is grounded in the notes and functional, but it has limitations:
+
+- It matches words rather than meaning.
+- It may miss synonyms.
+- It returns extracted text instead of a newly written answer.
+- It cannot explain or combine multiple chunks as naturally as a language model.
+
+### How Full RAG Works After Ollama Is Installed
+
+After Ollama, `gemma3:1b`, and `nomic-embed-text` are available, the complete RAG pipeline runs.
+
+#### Phase 1: Indexing During Upload
+
+1. The uploaded document is converted to text.
+2. Text is divided into overlapping chunks.
+3. Django sends every chunk to Ollama's local embedding endpoint.
+4. Ollama runs `nomic-embed-text`.
+5. The model returns a numerical vector representing the chunk's meaning.
+6. Django stores the vector, chunk text, note ID, user ID, page number, and chunk index in ChromaDB.
+
+An embedding does not contain a written answer. It is a numerical representation used to compare semantic similarity.
+
+#### Phase 2: Retrieval During Chat
+
+1. Django sends the student's question to `nomic-embed-text`.
+2. Ollama returns a question vector.
+3. ChromaDB compares the question vector with stored chunk vectors.
+4. ChromaDB returns up to five semantically similar chunks.
+5. Results are restricted to the logged-in user and selected note.
+
+Semantic retrieval can connect related meaning even when exact wording differs. For example, a question containing `plants make energy from light` can retrieve a chunk containing `photosynthesis converts sunlight into chemical energy`.
+
+#### Phase 3: Answer Generation
+
+1. Django combines the retrieved chunks into a context block.
+2. Django adds instructions to answer only from that context.
+3. Django sends the complete prompt to Ollama's generation endpoint.
+4. Ollama runs `gemma3:1b`.
+5. The model writes the final student-friendly answer.
+6. Django displays the answer with source note and page metadata.
+7. The complete interaction is stored in `ChatHistory` with `retrieval_mode="vector"` and `used_llm=True`.
+
+### Exact Role of Each Ollama Model
+
+```text
+nomic-embed-text:
+Question or note text -> numerical vector
+Purpose -> find relevant information
+
+gemma3:1b:
+Instructions + retrieved note text + question -> written response
+Purpose -> explain, summarize, and format information
+```
+
+For quizzes, flashcards, and summaries, RAG retrieval is not currently used. Django sends the beginning of the selected note directly to `gemma3:1b`. Ollama runs the model, while Django validates, parses, and stores the output. A future improvement is to use chunk retrieval for these generators so long notes are handled more intelligently.
 
 ### Semantic Retrieval
 
