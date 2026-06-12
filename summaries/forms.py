@@ -11,4 +11,4 @@ class SummaryGenerateForm(forms.Form):
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         if user is not None:
-            self.fields['note'].queryset = Note.objects.filter(user=user)
+            self.fields['note'].queryset = Note.objects.filter(user=user).exclude(extracted_text='')

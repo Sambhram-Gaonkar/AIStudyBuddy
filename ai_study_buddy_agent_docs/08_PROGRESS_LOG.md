@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-12
 
 Agent: Codex
+Task IDs: B011
+Summary: Hardened upload, chat, quiz, flashcard, and summary workflows. Added file size and empty-file validation, safe parser errors, readable-text checks, processed-note filtering, and deterministic offline generation counts.
+Files Changed: config/settings.py, notes/, rag/, quiz/, flashcards/, summaries/forms.py, note templates, task/progress/decision/changelog docs.
+Testing Done: Ran all 27 Django tests, including a real generated PDF upload through chat, quiz scoring/PDF export, flashcard CSV export, and summary generation. Ran Django checks, Python compileall, and a real image OCR smoke test with locally installed Tesseract.
+Status: B011 finished.
+Next Step: Ollama remains optional; install it separately for model-generated answers instead of deterministic local fallbacks.
+
+---
+
+## 2026-06-12
+
+Agent: Codex
 Task IDs: B010
 Summary: Applied the provided Stitch clean interface design across the Django app with a responsive sidebar shell, mobile navigation, real progress analytics, tutor-style chat, quiz cards, revealable flashcards, updated forms, and consistent route headers.
 Files Changed: templates/base.html, dashboard/views.py, dashboard/tests.py, dashboard/chat/quiz/flashcard/note/summary templates, static/css/styles.css, task/progress/decision/changelog docs.

@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 
 from .models import Note, Subject
 
@@ -10,6 +11,7 @@ ALLOWED_CONTENT_TYPES = {
     'image/jpeg',
     'image/tiff',
     'image/bmp',
+    'application/octet-stream',
 }
 
 ALLOWED_EXTENSIONS = ('.pdf', '.docx', '.pptx', '.png', '.jpg', '.jpeg', '.tif', '.tiff', '.bmp')
@@ -32,6 +34,10 @@ class NoteUploadForm(forms.ModelForm):
     def clean_file(self):
         uploaded_file = self.cleaned_data['file']
         filename = uploaded_file.name.lower()
+        if uploaded_file.size == 0:
+            raise forms.ValidationError('The uploaded file is empty.')
+        if uploaded_file.size > settings.MAX_NOTE_UPLOAD_SIZE:
+            raise forms.ValidationError('The uploaded file must be 20 MB or smaller.')
         if not filename.endswith(ALLOWED_EXTENSIONS):
             raise forms.ValidationError('Only PDF, DOCX, PPTX, and image files are supported.')
         if uploaded_file.content_type and uploaded_file.content_type not in ALLOWED_CONTENT_TYPES:

@@ -18,6 +18,23 @@ Impact:
 
 ## 2026-06-12
 
+### Decision: Keep every study workflow usable when Ollama is unavailable
+
+Reason:
+Local model setup is optional and may not be running. Upload, retrieval, quiz, flashcard, and summary workflows must still complete without server errors.
+
+Alternatives Considered:
+
+- Require Ollama before allowing AI study actions
+- Disable generators while the model is offline
+
+Impact:
+Database-backed keyword retrieval and deterministic generators remain available offline. Ollama improves generated content when installed, but it is not a runtime requirement for core workflows.
+
+---
+
+## 2026-06-12
+
 ### Decision: Implement the Stitch design with local CSS and existing Django data
 
 Reason:

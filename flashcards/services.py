@@ -40,11 +40,17 @@ def parse_flashcards(text):
 
 def fallback_flashcards(note, number_of_cards):
     sentences = re.split(r'(?<=[.!?])\s+', note.extracted_text.strip())
-    sentences = [sentence.strip() for sentence in sentences if len(sentence.strip()) > 30]
+    sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
+    if not sentences:
+        return []
     cards = []
-    for index, sentence in enumerate(sentences[:number_of_cards], start=1):
+    for index in range(number_of_cards):
+        sentence = sentences[index % len(sentences)]
         words = re.findall(r'[A-Za-z][A-Za-z0-9-]+', sentence)
-        front = words[0] if words else f'Key idea {index}'
+        front_words = words[:4]
+        front = ' '.join(front_words) if front_words else f'Key idea {index + 1}'
+        if len(sentences) < number_of_cards:
+            front = f'{front} ({index + 1})'
         cards.append({
             'front': front,
             'back': sentence,

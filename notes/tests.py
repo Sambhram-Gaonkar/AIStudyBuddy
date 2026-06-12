@@ -36,6 +36,25 @@ class NoteUploadFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('Only PDF, DOCX, PPTX, and image files are supported.', form.errors['file'])
 
+    def test_accepts_generic_browser_content_type_for_supported_extension(self):
+        uploaded_file = SimpleUploadedFile(
+            'notes.pdf',
+            b'%PDF-1.4 data',
+            content_type='application/octet-stream',
+        )
+
+        form = NoteUploadForm(data={'title': 'Browser PDF'}, files={'file': uploaded_file})
+
+        self.assertTrue(form.is_valid(), form.errors)
+
+    def test_rejects_empty_file(self):
+        uploaded_file = SimpleUploadedFile('empty.pdf', b'', content_type='application/pdf')
+
+        form = NoteUploadForm(data={'title': 'Empty'}, files={'file': uploaded_file})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('empty', form.errors['file'][0].lower())
+
 
 class DocumentReaderTests(TestCase):
     @patch('rag_engine.document_reader.extract_image_pages')
@@ -101,6 +120,40 @@ class NoteUploadViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Tesseract OCR is not installed or is not available on PATH.')
         self.assertFalse(Note.objects.filter(title='Board Notes').exists())
+
+    @patch('notes.views.extract_document_pages')
+    def test_upload_rejects_document_without_readable_text(self, mock_extract_document_pages):
+        mock_extract_document_pages.return_value = []
+        uploaded_file = SimpleUploadedFile(
+            'blank.pdf',
+            b'%PDF-1.4 blank',
+            content_type='application/pdf',
+        )
+
+        response = self.client.post(
+            reverse('notes:upload'),
+            {'title': 'Blank Notes', 'file': uploaded_file},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'No readable text was found in this file.')
+        self.assertFalse(Note.objects.filter(title='Blank Notes').exists())
+
+    def test_upload_invalid_document_shows_read_error(self):
+        uploaded_file = SimpleUploadedFile(
+            'broken.pdf',
+            b'not a real pdf',
+            content_type='application/pdf',
+        )
+
+        response = self.client.post(
+            reverse('notes:upload'),
+            {'title': 'Broken Notes', 'file': uploaded_file},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'This file could not be read.')
+        self.assertFalse(Note.objects.filter(title='Broken Notes').exists())
 
 
 class SubjectFolderTests(TestCase):

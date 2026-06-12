@@ -58,3 +58,4 @@ Allowed status values:
 | B008 | Add deployment guide | Low | Finished | Waitress, WhiteNoise, environment security settings, and local/LAN deployment steps documented |
 | B009 | Add Ask AI chat history | Low | Finished | Persists user-owned questions, answers, retrieval details, and source metadata |
 | B010 | Apply Stitch clean interface design | Medium | Finished | Responsive academic-minimalist shell, progress dashboard, tutor chat, quiz, flashcards, and shared UI |
+| B011 | Harden complete study workflow | High | Finished | Validated uploads, friendly parser errors, reliable offline generation, processed-note filtering, and full-flow tests |

@@ -150,6 +150,7 @@ STORAGES = {
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+MAX_NOTE_UPLOAD_SIZE = 20 * 1024 * 1024
 
 CHROMA_DB_DIR = BASE_DIR / 'chroma_db'
 CHROMA_COLLECTION_NAME = 'study_buddy_notes'

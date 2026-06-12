@@ -19,6 +19,7 @@ class ChatHistoryTests(TestCase):
             user=self.user,
             title='Biology',
             file=SimpleUploadedFile('biology.pdf', b'%PDF-1.4'),
+            extracted_text='Cells are the basic unit of life.',
         )
         self.client.force_login(self.user)
 

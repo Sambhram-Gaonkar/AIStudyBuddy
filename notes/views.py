@@ -41,16 +41,31 @@ def upload_note(request):
 
             try:
                 pages = extract_document_pages(note.file.path)
-            except (OCRUnavailable, ValueError) as exc:
+            except Exception as exc:
                 note.file.delete(save=False)
                 note.delete()
-                form.add_error('file', str(exc))
+                if isinstance(exc, (OCRUnavailable, ValueError)):
+                    message = str(exc)
+                else:
+                    message = 'This file could not be read. Check that it is a valid, unencrypted document.'
+                form.add_error('file', message)
+                return render(request, 'notes/upload.html', {'form': form})
+
+            if not pages or not any(page.get('text', '').strip() for page in pages):
+                note.file.delete(save=False)
+                note.delete()
+                form.add_error('file', 'No readable text was found in this file.')
                 return render(request, 'notes/upload.html', {'form': form})
 
             note.extracted_text = '\n\n'.join(page['text'] for page in pages)
             note.save(update_fields=['extracted_text'])
 
             chunks = split_pages_into_chunks(pages)
+            if not chunks:
+                note.file.delete(save=False)
+                note.delete()
+                form.add_error('file', 'No searchable text chunks could be created from this file.')
+                return render(request, 'notes/upload.html', {'form': form})
             NoteChunk.objects.bulk_create([
                 NoteChunk(
                     note=note,
@@ -64,6 +79,7 @@ def upload_note(request):
             try:
                 index_note_chunks(note)
             except Exception:
+                # Database chunks remain available for keyword retrieval when Ollama is offline.
                 pass
             return redirect('notes:detail', pk=note.pk)
     else:

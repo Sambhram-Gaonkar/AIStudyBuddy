@@ -35,13 +35,17 @@ Track user-facing changes here.
 - Task board
 - Roadmap
 - Agent rules
+- End-to-end regression coverage for PDF upload, chat, quiz, exports, flashcards, and summaries
 
 ### Changed
 
 - Dashboard now shows generated study activity, not only note activity
 - Dashboard now calculates quiz average, topic performance, weak topics, and recent results from stored attempts
 - Shared app navigation, forms, cards, lists, and study pages now use the supplied clean interface design system
+- Study generators now list only successfully processed notes
+- Offline quiz and flashcard generators now return the requested item count
 
 ### Fixed
 
-- None
+- Empty, oversized, corrupt, encrypted, and textless uploads now fail with clear form errors
+- Upload parser failures no longer produce server errors

@@ -5,6 +5,7 @@ from django.urls import reverse
 from notes.models import Note
 
 from .models import Flashcard, FlashcardProgress
+from .services import fallback_flashcards
 
 
 class FlashcardRevisionTests(TestCase):
@@ -52,3 +53,9 @@ class FlashcardRevisionTests(TestCase):
         response = self.client.get(reverse('flashcards:revise', kwargs={'note_id': self.note.pk}))
 
         self.assertEqual(response.status_code, 404)
+
+    def test_offline_fallback_creates_requested_card_count(self):
+        cards = fallback_flashcards(self.note, 4)
+
+        self.assertEqual(len(cards), 4)
+        self.assertTrue(all(card['front'] and card['back'] for card in cards))

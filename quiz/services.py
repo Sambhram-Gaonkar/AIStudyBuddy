@@ -51,12 +51,13 @@ def parse_llm_questions(text):
 
 def fallback_questions(note, question_type, number_of_questions):
     sentences = re.split(r'(?<=[.!?])\s+', note.extracted_text.strip())
-    sentences = [sentence.strip() for sentence in sentences if len(sentence.strip()) > 30]
+    sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
     if not sentences:
         sentences = ['No clear sentence could be extracted from this note.']
 
     questions = []
-    for index, sentence in enumerate(sentences[:number_of_questions], start=1):
+    for index in range(1, number_of_questions + 1):
+        sentence = sentences[(index - 1) % len(sentences)]
         if question_type == 'mcq':
             questions.append({
                 'question': f'Which statement is supported by the notes? ({index})',

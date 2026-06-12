@@ -5,6 +5,7 @@ from django.urls import reverse
 from notes.models import Note
 
 from .models import Quiz, QuizAttempt, QuizQuestion
+from .services import fallback_questions
 
 
 class QuizScoreTrackingTests(TestCase):
@@ -58,3 +59,9 @@ class QuizScoreTrackingTests(TestCase):
         response = self.client.get(reverse('quiz:take', kwargs={'pk': self.quiz.pk}))
 
         self.assertEqual(response.status_code, 404)
+
+    def test_offline_fallback_creates_requested_question_count(self):
+        questions = fallback_questions(self.note, 'mcq', 4)
+
+        self.assertEqual(len(questions), 4)
+        self.assertTrue(all(question['options'] for question in questions))
