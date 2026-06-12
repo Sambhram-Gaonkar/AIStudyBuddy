@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Flashcards | AI Study Buddy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#bc4800",
+                        "secondary": "#5c5f61",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#626567",
+                        "success-green": "#059669",
+                        "outline-variant": "#c3c6d7",
+                        "inverse-on-surface": "#f0f0fb",
+                        "background": "#faf8ff",
+                        "outline": "#737686",
+                        "on-surface": "#191b23",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "surface-bright": "#faf8ff",
+                        "oxford-blue": "#1E293B",
+                        "surface-variant": "#e1e2ed",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-container": "#ffede6",
+                        "warning-red": "#DC2626",
+                        "on-secondary-fixed-variant": "#444749",
+                        "on-surface-variant": "#434655",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#943700",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#00174b",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#e0e3e5",
+                        "surface-container": "#ededf9",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-background": "#191b23",
+                        "surface-tint": "#0053db",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#e0e3e5",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container-low": "#f3f3fe",
+                        "inverse-surface": "#2e3039",
+                        "surface-container-high": "#e7e7f3",
+                        "on-error": "#ffffff",
+                        "primary": "#004ac6",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9d9e5",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "border-subtle": "#E2E8F0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "1.5rem",
+                        "gutter": "1.5rem",
+                        "stack-lg": "3rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1200px",
+                        "margin-mobile": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "button": ["Hanken Grotesk"],
+                        "headline-xl-mobile": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "button": ["15px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .card-flip-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-surface-bright min-h-screen flex text-on-surface">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="fixed left-0 top-0 h-screen w-[300px] flex flex-col py-stack-md px-4 bg-surface-container-low dark:bg-surface-container-highest border-r border-border-subtle dark:border-outline-variant z-40 hidden md:flex">
+<div class="mb-stack-lg px-2">
+<h1 class="text-headline-lg font-headline-lg font-bold text-oxford-blue">AI Study Buddy</h1>
+</div>
+<div class="flex items-center gap-3 px-2 mb-8">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-secondary uppercase tracking-widest">Current Session</p>
+<p class="text-body-md font-body-md font-semibold text-oxford-blue">Modern History 101</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="text-body-md font-body-md">Chat Tutor</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="text-body-md font-body-md">Quiz</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="text-body-md font-body-md">Flashcards</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span class="text-body-md font-body-md">Summary</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-body-md font-body-md">Progress</span>
+</a>
+</nav>
+<button class="mt-stack-md w-full py-3 bg-oxford-blue text-white rounded-lg font-button text-button flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+            New Session
+        </button>
+<div class="mt-auto border-t border-border-subtle pt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-body-md font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-body-md font-body-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[300px] flex flex-col min-h-screen">
+<!-- TopNavBar (Authority Source: JSON) -->
+<header class="w-full bg-surface dark:bg-surface-dim border-b border-border-subtle dark:border-outline-variant flex justify-between items-center px-gutter h-16 sticky top-0 z-30">
+<div class="flex items-center gap-4">
+<span class="md:hidden material-symbols-outlined text-oxford-blue cursor-pointer" data-icon="menu">menu</span>
+<span class="text-headline-lg font-headline-lg font-bold text-oxford-blue dark:text-primary-fixed">Flashcards</span>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="flex items-center gap-2 px-4 py-2 border border-border-subtle rounded text-label-caps font-label-caps text-secondary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined text-body-sm" data-icon="cloud_upload">cloud_upload</span>
+                    Export to CSV
+                </button>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-70" data-icon="settings">settings</span>
+<div class="w-8 h-8 rounded-full bg-secondary-fixed overflow-hidden border border-border-subtle">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4YjSIlBkGUail2ORWBrb359ksV3CmuC-YHYFqxCD82ZGHf3Ar6oLVXo0UOAwH78EEQYLB2TxbswjdAMsVnvudcby1Be-qngqye2LTWp2yadkA4whYbztr4sVJK4XTvyqnQVjymrG6tOcGy2cVucno0WdynsOpTQQ65D0RY08NxPRZ6v9WYjkk9mXg8CsRm6AWyLg2C2fepcW3UkiWzz2EiJjHgdJOj0QnFVjd2Jktca1ifu3P68TpKurLgWAV_-IGZ_Kz1zf1-eg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Flashcard Content Area -->
+<div class="p-gutter max-w-container-max mx-auto w-full flex-1">
+<div class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-headline-xl font-headline-xl text-oxford-blue">Industrial Revolution</h2>
+<p class="text-body-md font-body-md text-secondary mt-1">Reviewing 24 terms from Chapter 4.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="text-label-caps font-label-caps text-secondary">Session Progress</span>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-48 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-success-green h-full w-[45%]"></div>
+</div>
+<span class="text-body-sm font-body-sm font-semibold">11/24</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento-style Flashcard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-md">
+<!-- Card 1 -->
+<div class="card-flip-container perspective-1000 h-64 group">
+<div class="card-inner relative w-full h-full transition-transform duration-500 preserve-3d cursor-pointer" onclick="this.parentElement.classList.toggle('flipped')">
+<!-- Front -->
+<div class="absolute inset-0 backface-hidden bg-white border border-border-subtle rounded-xl p-8 flex flex-col justify-between shadow-sm group-hover:border-primary transition-colors">
+<span class="text-label-caps font-label-caps text-secondary">TERM</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<h3 class="text-headline-lg font-headline-lg text-oxford-blue">Steam Engine</h3>
+</div>
+<div class="flex justify-center">
+<span class="text-body-sm font-body-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="touch_app">touch_app</span> Click to flip
+                                </span>
+</div>
+</div>
+<!-- Back -->
+<div class="absolute inset-0 backface-hidden bg-surface-container-low border border-border-subtle rounded-xl p-8 flex flex-col justify-between rotate-y-180">
+<span class="text-label-caps font-label-caps text-secondary">DEFINITION</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<p class="text-body-md font-body-md text-oxford-blue">A heat engine that performs mechanical work using steam as its working fluid, famously improved by James Watt in 1776.</p>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-success-green flex items-center gap-1 font-button text-button">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span> Mastered
+                                </button>
+<button class="text-primary font-button text-button">Next Card</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="card-flip-container perspective-1000 h-64 group">
+<div class="card-inner relative w-full h-full transition-transform duration-500 preserve-3d cursor-pointer" onclick="this.parentElement.classList.toggle('flipped')">
+<!-- Front -->
+<div class="absolute inset-0 backface-hidden bg-white border border-border-subtle rounded-xl p-8 flex flex-col justify-between shadow-sm group-hover:border-primary transition-colors">
+<span class="text-label-caps font-label-caps text-secondary">TERM</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<h3 class="text-headline-lg font-headline-lg text-oxford-blue">Urbanization</h3>
+</div>
+<div class="flex justify-center">
+<span class="text-body-sm font-body-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="touch_app">touch_app</span> Click to flip
+                                </span>
+</div>
+</div>
+<!-- Back -->
+<div class="absolute inset-0 backface-hidden bg-surface-container-low border border-border-subtle rounded-xl p-8 flex flex-col justify-between rotate-y-180">
+<span class="text-label-caps font-label-caps text-secondary">DEFINITION</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<p class="text-body-md font-body-md text-oxford-blue">The population shift from rural to urban areas, the decrease in the proportion of people living in rural areas, and the ways in which societies adapt to this change.</p>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-secondary flex items-center gap-1 font-button text-button">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span> Review Later
+                                </button>
+<button class="text-primary font-button text-button">Next Card</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="card-flip-container perspective-1000 h-64 group">
+<div class="card-inner relative w-full h-full transition-transform duration-500 preserve-3d cursor-pointer" onclick="this.parentElement.classList.toggle('flipped')">
+<!-- Front -->
+<div class="absolute inset-0 backface-hidden bg-white border border-border-subtle rounded-xl p-8 flex flex-col justify-between shadow-sm group-hover:border-primary transition-colors">
+<span class="text-label-caps font-label-caps text-secondary">TERM</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<h3 class="text-headline-lg font-headline-lg text-oxford-blue">Bessemer Process</h3>
+</div>
+<div class="flex justify-center">
+<span class="text-body-sm font-body-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="touch_app">touch_app</span> Click to flip
+                                </span>
+</div>
+</div>
+<!-- Back -->
+<div class="absolute inset-0 backface-hidden bg-surface-container-low border border-border-subtle rounded-xl p-8 flex flex-col justify-between rotate-y-180">
+<span class="text-label-caps font-label-caps text-secondary">DEFINITION</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<p class="text-body-md font-body-md text-oxford-blue">The first inexpensive industrial process for the mass production of steel from molten pig iron before the development of the open hearth furnace.</p>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-success-green flex items-center gap-1 font-button text-button">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span> Mastered
+                                </button>
+<button class="text-primary font-button text-button">Next Card</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="card-flip-container perspective-1000 h-64 group">
+<div class="card-inner relative w-full h-full transition-transform duration-500 preserve-3d cursor-pointer" onclick="this.parentElement.classList.toggle('flipped')">
+<!-- Front -->
+<div class="absolute inset-0 backface-hidden bg-white border border-border-subtle rounded-xl p-8 flex flex-col justify-between shadow-sm group-hover:border-primary transition-colors">
+<span class="text-label-caps font-label-caps text-secondary">TERM</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<h3 class="text-headline-lg font-headline-lg text-oxford-blue">Laissez-faire</h3>
+</div>
+<div class="flex justify-center">
+<span class="text-body-sm font-body-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="touch_app">touch_app</span> Click to flip
+                                </span>
+</div>
+</div>
+<!-- Back -->
+<div class="absolute inset-0 backface-hidden bg-surface-container-low border border-border-subtle rounded-xl p-8 flex flex-col justify-between rotate-y-180">
+<span class="text-label-caps font-label-caps text-secondary">DEFINITION</span>
+<div class="flex-1 flex items-center justify-center text-center">
+<p class="text-body-md font-body-md text-oxford-blue">An economic system in which transactions between private groups of people are free from or almost free from any form of economic interventionism such as subsidies and regulations.</p>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-secondary flex items-center gap-1 font-button text-button">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span> Review Later
+                                </button>
+<button class="text-primary font-button text-button">Next Card</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contextual Controls -->
+<div class="mt-stack-lg flex items-center justify-between border-t border-border-subtle pt-8">
+<button class="flex items-center gap-2 px-6 py-3 border border-border-subtle rounded-lg text-button font-button text-oxford-blue hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+                    Previous Set
+                </button>
+<div class="hidden md:flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-high"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-high"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-high"></div>
+</div>
+<button class="flex items-center gap-2 px-8 py-3 bg-oxford-blue text-white rounded-lg text-button font-button hover:opacity-90 transition-opacity">
+                    Next Batch
+                    <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border-subtle flex justify-around items-center h-16 z-50">
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="text-[10px] font-label-caps">TUTOR</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="text-[10px] font-label-caps">QUIZ</span>
+</a>
+<a class="flex flex-col items-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="style" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="text-[10px] font-label-caps">CARDS</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-[10px] font-label-caps">STATS</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Export to CSV success toast simulation
+        document.querySelector('button:contains("Export to CSV")')?.addEventListener('click', () => {
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-body-sm" data-icon="check">check</span> Exported!';
+            btn.classList.add('bg-success-green', 'text-white', 'border-success-green');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('bg-success-green', 'text-white', 'border-success-green');
+            }, 2000);
+        });
+
+        // Add a simple filter for "contains" to support the simulation above
+        (function() {
+            if (!HTMLElement.prototype.containsText) {
+                HTMLElement.prototype.containsText = function(text) {
+                    return this.textContent.includes(text);
+                };
+            }
+        })();
+    </script>
+</body></html>

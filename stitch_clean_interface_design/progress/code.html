@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .chart-bar-transition {
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#bc4800",
+                        "secondary": "#5c5f61",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#626567",
+                        "success-green": "#059669",
+                        "outline-variant": "#c3c6d7",
+                        "inverse-on-surface": "#f0f0fb",
+                        "background": "#faf8ff",
+                        "outline": "#737686",
+                        "on-surface": "#191b23",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "surface-bright": "#faf8ff",
+                        "oxford-blue": "#1E293B",
+                        "surface-variant": "#e1e2ed",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-container": "#ffede6",
+                        "warning-red": "#DC2626",
+                        "on-secondary-fixed-variant": "#444749",
+                        "on-surface-variant": "#434655",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#943700",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#e0e3e5",
+                        "surface-container": "#ededf9",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-background": "#191b23",
+                        "surface-tint": "#0053db",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#e0e3e5",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container-low": "#f3f3fe",
+                        "inverse-surface": "#2e3039",
+                        "surface-container-high": "#e7e7f3",
+                        "on-error": "#ffffff",
+                        "primary": "#004ac6",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9d9e5",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "border-subtle": "#E2E8F0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "1.5rem",
+                        "gutter": "1.5rem",
+                        "stack-lg": "3rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1200px",
+                        "margin-mobile": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "button": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "button": ["15px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-surface w-full border-b border-border-subtle flex justify-between items-center px-gutter h-16 sticky top-0 z-50">
+<div class="text-headline-lg font-headline-lg font-bold text-oxford-blue">AI Study Buddy</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-label-caps font-label-caps text-secondary hover:text-primary transition-colors cursor-pointer active:opacity-70" href="#">LEARNING HUB</a>
+<a class="text-label-caps font-label-caps text-primary font-bold border-b-2 border-primary cursor-pointer active:opacity-70" href="#">PROGRESS</a>
+<a class="text-label-caps font-label-caps text-secondary hover:text-primary transition-colors cursor-pointer active:opacity-70" href="#">RESOURCES</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary transition-colors">cloud_upload</span>
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary transition-colors">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-border-subtle">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE1EpovhoyII42r7qp6vtE0AGmSo4SAb4kNx4JsWhgogdzLNofA-xLmgP6KWMEBjCOZOMLnEurTrBk6tYsjc6VmI9drheC2UZiDt_iYofcjCY71fB5w3XAx663tqkBtlf8F4zREAm0p9y7YU-Gvpr2sXuc8G4cy0hSECRn3a3mQb5XAm8hVh2hIGZ5_5NxMV8oXTXaNiLt42q4N9NtSmeHfYX4wtQjRoAafeGoaMgeLLdNmEwaJqUzu9kkWQbs4_yaNo-ZKmxG3Vk"/>
+</div>
+</div>
+</nav>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-[300px] bg-surface-container-low border-r border-border-subtle hidden md:flex flex-col py-stack-md px-4">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed">school</span>
+</div>
+<div>
+<div class="text-body-md font-body-md font-bold text-oxford-blue">Current Session</div>
+<div class="text-body-sm font-body-sm text-secondary">Modern History 101</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-body-md font-body-md">Chat Tutor</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="text-body-md font-body-md">Quiz</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">style</span>
+<span class="text-body-md font-body-md">Flashcards</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">article</span>
+<span class="text-body-md font-body-md">Summary</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Progress</span>
+</a>
+</nav>
+<button class="w-full mt-4 py-3 bg-oxford-blue text-white rounded-lg font-button text-button hover:opacity-90 transition-opacity">
+                New Session
+            </button>
+<div class="mt-auto pt-4 border-t border-border-subtle space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="text-body-md font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-md font-body-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-[300px] p-gutter max-w-5xl mx-auto w-full">
+<header class="mb-stack-lg">
+<h1 class="font-headline-xl text-headline-xl text-oxford-blue mb-2">Performance Dashboard</h1>
+<p class="text-body-md text-secondary">Visualizing your academic journey and pinpointing areas for growth.</p>
+</header>
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md mb-stack-lg">
+<div class="bg-surface-container-low border border-border-subtle p-6 rounded-xl flex items-center justify-between shadow-sm">
+<div>
+<div class="text-label-caps font-label-caps text-secondary mb-1">TOTAL QUIZZES</div>
+<div class="text-[48px] font-bold text-oxford-blue leading-none">42</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">assignment_turned_in</span>
+</div>
+</div>
+<div class="bg-surface-container-low border border-border-subtle p-6 rounded-xl flex items-center justify-between shadow-sm">
+<div>
+<div class="text-label-caps font-label-caps text-secondary mb-1">AVERAGE SCORE</div>
+<div class="text-[48px] font-bold text-oxford-blue leading-none">78%</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+</div>
+</div>
+<!-- Main Analytics Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-stack-md">
+<!-- Bar Chart Column -->
+<div class="lg:col-span-2 space-y-stack-md">
+<div class="bg-white border border-border-subtle p-gutter rounded-xl shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<h2 class="text-headline-lg font-headline-lg text-oxford-blue">Quiz Performance by Topic</h2>
+<span class="text-body-sm text-secondary">Last 30 Days</span>
+</div>
+<div class="flex items-end justify-between h-64 gap-4 px-4">
+<!-- Topic 1 -->
+<div class="flex flex-col items-center flex-1 group">
+<div class="w-full bg-surface-container-high rounded-t-lg relative flex items-end overflow-hidden h-full">
+<div class="w-full bg-primary chart-bar-transition" style="height: 85%;">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-oxford-blue text-white text-[10px] px-1.5 py-0.5 rounded">85%</div>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-secondary mt-3 text-center leading-tight">French<br/>Rev</span>
+</div>
+<!-- Topic 2 -->
+<div class="flex flex-col items-center flex-1 group">
+<div class="w-full bg-surface-container-high rounded-t-lg relative flex items-end overflow-hidden h-full">
+<div class="w-full bg-warning-red chart-bar-transition" style="height: 45%;">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-oxford-blue text-white text-[10px] px-1.5 py-0.5 rounded">45%</div>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-secondary mt-3 text-center leading-tight">Indust<br/>Rev</span>
+</div>
+<!-- Topic 3 -->
+<div class="flex flex-col items-center flex-1 group">
+<div class="w-full bg-surface-container-high rounded-t-lg relative flex items-end overflow-hidden h-full">
+<div class="w-full bg-primary chart-bar-transition" style="height: 92%;">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-oxford-blue text-white text-[10px] px-1.5 py-0.5 rounded">92%</div>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-secondary mt-3 text-center leading-tight">World<br/>War I</span>
+</div>
+<!-- Topic 4 -->
+<div class="flex flex-col items-center flex-1 group">
+<div class="w-full bg-surface-container-high rounded-t-lg relative flex items-end overflow-hidden h-full">
+<div class="w-full bg-warning-red chart-bar-transition" style="height: 58%;">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-oxford-blue text-white text-[10px] px-1.5 py-0.5 rounded">58%</div>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-secondary mt-3 text-center leading-tight">Cold<br/>War</span>
+</div>
+<!-- Topic 5 -->
+<div class="flex flex-col items-center flex-1 group">
+<div class="w-full bg-surface-container-high rounded-t-lg relative flex items-end overflow-hidden h-full">
+<div class="w-full bg-primary chart-bar-transition" style="height: 76%;">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-oxford-blue text-white text-[10px] px-1.5 py-0.5 rounded">76%</div>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-secondary mt-3 text-center leading-tight">Rome<br/>Empire</span>
+</div>
+<!-- Topic 6 -->
+<div class="flex flex-col items-center flex-1 group">
+<div class="w-full bg-surface-container-high rounded-t-lg relative flex items-end overflow-hidden h-full">
+<div class="w-full bg-primary chart-bar-transition" style="height: 88%;">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-oxford-blue text-white text-[10px] px-1.5 py-0.5 rounded">88%</div>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-secondary mt-3 text-center leading-tight">Renaiss<br/>ance</span>
+</div>
+</div>
+</div>
+<!-- Recent Activity Summary -->
+<div class="bg-white border border-border-subtle p-gutter rounded-xl shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-headline-lg font-headline-lg text-oxford-blue">Recent Session Results</h3>
+<button class="text-primary font-button text-button hover:underline">View All</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg border border-border-subtle">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-success-green/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-success-green">check_circle</span>
+</div>
+<div>
+<div class="font-bold text-oxford-blue">The Enlightenment Era</div>
+<div class="text-body-sm text-secondary">Yesterday, 4:30 PM</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-success-green">18/20</div>
+<div class="text-[10px] font-label-caps text-secondary uppercase">Score</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg border border-border-subtle">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-warning-red/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-warning-red">priority_high</span>
+</div>
+<div>
+<div class="font-bold text-oxford-blue">Industrial Revolution Phase II</div>
+<div class="text-body-sm text-secondary">2 days ago</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-warning-red">9/20</div>
+<div class="text-[10px] font-label-caps text-secondary uppercase">Score</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Weak Topics & Focus Sidebar -->
+<div class="space-y-stack-md">
+<div class="bg-white border border-warning-red/30 p-gutter rounded-xl shadow-sm overflow-hidden relative">
+<!-- Red Accent Top Bar -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-warning-red"></div>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-warning-red">report_problem</span>
+<h2 class="text-headline-lg font-headline-lg text-oxford-blue">Weak Topics</h2>
+</div>
+<p class="text-body-sm text-secondary mb-6">Prioritize these areas to increase your overall average.</p>
+<div class="space-y-4">
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold text-oxford-blue">Industrial Revolution</span>
+<span class="text-warning-red font-bold">45%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-warning-red h-full" style="width: 45%;"></div>
+</div>
+<div class="mt-2 text-[11px] text-secondary flex items-center gap-1 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span>
+                                    Recommended: Study "Impact of Steam Engines"
+                                </div>
+</div>
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold text-oxford-blue">Cold War Geopolitics</span>
+<span class="text-warning-red font-bold">58%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-warning-red h-full opacity-70" style="width: 58%;"></div>
+</div>
+<div class="mt-2 text-[11px] text-secondary flex items-center gap-1 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span>
+                                    Recommended: Practice "Cuban Missile Crisis" Quiz
+                                </div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 border-2 border-oxford-blue text-oxford-blue rounded-lg font-button text-button hover:bg-oxford-blue hover:text-white transition-all">
+                            Generate Review Session
+                        </button>
+</div>
+<div class="bg-oxford-blue p-gutter rounded-xl text-white relative overflow-hidden">
+<div class="relative z-10">
+<div class="text-label-caps font-label-caps opacity-70 mb-2">STUDY TIP</div>
+<h3 class="font-bold text-lg mb-4">Space your learning</h3>
+<p class="text-sm opacity-90 leading-relaxed mb-6">Research shows that studying topics in short, repeated bursts is 3x more effective than cramming.</p>
+<div class="flex items-center gap-2 text-primary-fixed cursor-pointer hover:underline">
+<span class="text-sm font-bold">Learn more</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+<!-- Subtle background texture/pattern using CSS only -->
+<div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
+<div class="absolute -left-8 top-12 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border-subtle h-16 px-4 flex justify-around items-center z-50">
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-[10px] font-label-caps">CHAT</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="text-[10px] font-label-caps">QUIZ</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-label-caps font-bold">PROGRESS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined">style</span>
+<span class="text-[10px] font-label-caps">CARDS</span>
+</a>
+</nav>
+<script>
+        // Simple entrance animation for bars
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.chart-bar-transition');
+            bars.forEach(bar => {
+                const targetHeight = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = targetHeight;
+                }, 300);
+            });
+        });
+    </script>
+</body></html>

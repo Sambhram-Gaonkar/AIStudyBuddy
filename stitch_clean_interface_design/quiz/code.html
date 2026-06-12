@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Study Buddy - Quiz Session</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#bc4800",
+                        "secondary": "#5c5f61",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#626567",
+                        "success-green": "#059669",
+                        "outline-variant": "#c3c6d7",
+                        "inverse-on-surface": "#f0f0fb",
+                        "background": "#faf8ff",
+                        "outline": "#737686",
+                        "on-surface": "#191b23",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "surface-bright": "#faf8ff",
+                        "oxford-blue": "#1E293B",
+                        "surface-variant": "#e1e2ed",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-container": "#ffede6",
+                        "warning-red": "#DC2626",
+                        "on-secondary-fixed-variant": "#444749",
+                        "on-surface-variant": "#434655",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#943700",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#00174b",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#e0e3e5",
+                        "surface-container": "#ededf9",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-background": "#191b23",
+                        "surface-tint": "#0053db",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#e0e3e5",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container-low": "#f3f3fe",
+                        "inverse-surface": "#2e3039",
+                        "surface-container-high": "#e7e7f3",
+                        "on-error": "#ffffff",
+                        "primary": "#004ac6",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9d9e5",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "border-subtle": "#E2E8F0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "1.5rem",
+                        "gutter": "1.5rem",
+                        "stack-lg": "3rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1200px",
+                        "margin-mobile": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "button": ["Hanken Grotesk"],
+                        "headline-xl-mobile": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "button": ["15px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-option {
+            border-color: #004ac6 !important;
+            background-color: #f3f3fe !important;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-screen w-[300px] flex flex-col py-stack-md px-4 bg-surface-container-low dark:bg-surface-container-highest border-r border-border-subtle dark:border-outline-variant hidden md:flex z-50">
+<div class="mb-stack-lg">
+<h1 class="text-headline-lg font-headline-lg font-bold text-oxford-blue">AI Study Buddy</h1>
+</div>
+<div class="mb-8 p-4 bg-white rounded-xl border border-border-subtle">
+<h2 class="text-label-caps font-label-caps text-secondary mb-2">Current Session</h2>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<div>
+<p class="font-bold text-oxford-blue">Modern History 101</p>
+<p class="text-body-sm text-secondary">Active Quiz</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all scale-95 active:scale-90 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-body-md">Chat Tutor</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-fixed text-on-primary-fixed font-bold rounded-lg transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="font-body-md">Quiz</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all scale-95 active:scale-90 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-body-md">Flashcards</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all scale-95 active:scale-90 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span class="font-body-md">Summary</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all scale-95 active:scale-90 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md">Progress</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-border-subtle">
+<button class="w-full py-3 mb-4 bg-oxford-blue text-white font-button rounded-lg hover:opacity-90 transition-opacity">
+                New Session
+            </button>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-body-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-secondary hover:text-warning-red transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-body-sm">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-[300px] min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component - Web Context) -->
+<header class="w-full px-gutter h-16 flex justify-between items-center bg-surface dark:bg-surface-dim border-b border-border-subtle dark:border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 text-secondary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="hidden md:flex items-center gap-2">
+<span class="text-label-caps font-label-caps text-secondary">Quiz Mode</span>
+<span class="text-secondary opacity-30">/</span>
+<span class="text-label-caps font-label-caps text-primary font-bold">Modern History 101</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:text-primary transition-colors" data-icon="settings">settings</span>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high border border-border-subtle">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUstO-3ARm2UugkPJ-83HaibKl-uqM6lRgr5vPy8y023MBNW6j0K12clrddM2cJB10MpxGlo9KAXJZA9vvO1XPV7v6jDCUkjcVVYATaGHh_mTQ9vMqqIhzjhyB8vV2a3t011iuxv49G3ul-WlXy0C__bi2HWb0JVlKS4DPln7-OpVjSe8RKWEmPM-n32P57WrmroE93c-gAwTTpGoQsCD5zTIrS1fElkhgFFP6cfqjoMefh7AWU5B_Ks9jWQHtdhmVHSjz8svUaf4"/>
+</div>
+</div>
+</header>
+<!-- Quiz Container -->
+<section class="flex-1 max-w-[800px] mx-auto w-full px-gutter py-stack-lg">
+<!-- Quiz Header Meta -->
+<div class="mb-stack-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-stack-sm">
+<div>
+<h2 class="text-headline-xl font-headline-xl text-oxford-blue">Quiz: The Industrial Revolution</h2>
+<p class="text-body-md text-secondary mt-1">Test your knowledge on the socio-economic shifts of the 18th century.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-label-caps font-label-caps text-on-surface-variant border border-border-subtle">Medium</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-label-caps font-label-caps text-on-surface-variant border border-border-subtle">10 Questions</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="mt-8">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-caps font-label-caps text-secondary">Progress: 40%</span>
+<span class="text-label-caps font-label-caps text-secondary">4 of 10 completed</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary transition-all duration-500 ease-out" style="width: 40%"></div>
+</div>
+</div>
+</div>
+<!-- Single Question Card (Focus View) -->
+<div class="bg-white rounded-xl border border-border-subtle shadow-[0px_4px_12px_rgba(0,0,0,0.05)] p-8">
+<div class="mb-8">
+<span class="text-label-caps font-label-caps text-primary mb-2 block">Question 5</span>
+<h3 class="text-headline-lg font-headline-lg text-oxford-blue leading-snug">
+                        Which invention by James Watt significantly improved the efficiency of the steam engine in 1776?
+                    </h3>
+</div>
+<div class="space-y-4">
+<!-- Option A -->
+<label class="group flex items-center p-5 border border-border-subtle rounded-lg cursor-pointer hover:border-primary-fixed-dim hover:bg-surface-container-low transition-all active:scale-[0.99]" onclick="selectOption(this)">
+<input class="hidden" name="q5" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-border-subtle flex items-center justify-center mr-4 group-hover:border-primary transition-colors">
+<div class="w-3 h-3 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+<span class="font-body-md text-on-surface-variant">The Flying Shuttle</span>
+</label>
+<!-- Option B (Selected State Mockup) -->
+<label class="group flex items-center p-5 border border-primary bg-surface-container-low rounded-lg cursor-pointer transition-all active:scale-[0.99]" onclick="selectOption(this)">
+<input checked="" class="hidden" name="q5" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center mr-4">
+<div class="w-3 h-3 rounded-full bg-primary opacity-100"></div>
+</div>
+<span class="font-body-md text-oxford-blue font-semibold">Separate Condenser</span>
+</label>
+<!-- Option C -->
+<label class="group flex items-center p-5 border border-border-subtle rounded-lg cursor-pointer hover:border-primary-fixed-dim hover:bg-surface-container-low transition-all active:scale-[0.99]" onclick="selectOption(this)">
+<input class="hidden" name="q5" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-border-subtle flex items-center justify-center mr-4 group-hover:border-primary transition-colors">
+<div class="w-3 h-3 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+<span class="font-body-md text-on-surface-variant">Spinning Jenny</span>
+</label>
+<!-- Option D -->
+<label class="group flex items-center p-5 border border-border-subtle rounded-lg cursor-pointer hover:border-primary-fixed-dim hover:bg-surface-container-low transition-all active:scale-[0.99]" onclick="selectOption(this)">
+<input class="hidden" name="q5" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-border-subtle flex items-center justify-center mr-4 group-hover:border-primary transition-colors">
+<div class="w-3 h-3 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+<span class="font-body-md text-on-surface-variant">Water Frame</span>
+</label>
+</div>
+<div class="mt-12 flex items-center justify-between">
+<button class="flex items-center gap-2 text-secondary hover:text-oxford-blue font-button transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+                        Previous
+                    </button>
+<div class="flex gap-4">
+<button class="px-6 py-3 border border-border-subtle text-secondary font-button rounded-lg hover:bg-surface-container-high transition-colors">
+                            Skip
+                        </button>
+<button class="px-8 py-3 bg-primary text-white font-button rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-primary/20">
+                            Confirm Answer
+                        </button>
+</div>
+</div>
+</div>
+<!-- Supporting Imagery (Bento Inspired Detail) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-stack-lg">
+<div class="relative rounded-xl overflow-hidden aspect-video group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A detailed, atmospheric 18th-century industrial schematic illustration of a steam engine, rendered in a clean, intellectual academic style with high-contrast lines on a soft off-white background. The lighting is bright and modern, avoiding heavy shadows to maintain a minimalist scholarly aesthetic. Professional technical drawing vibes with scholarly precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbn7jmcFprIGMIkTctVcCBhdbt1GZ3Qn5Xfk_W0jDDvLK8IaL59KGIT9CIwVgA_fcKd_teoHIhG0gpZC-DLnG--qsiab_Y_WwSSNUHC94psp5EWr-kRni2eJfT3tA7UGjgK5rHEenEH8qYovzCnxhWqb7puQJ_2pumaeG2n49ktFLORWK4_5W1Tqfb6gLbFeHYeSAesAMdQ-8FPT5G-XpI6oeLFHZBxCZXHwRGBAuN29sNU2SxWBBXi39KmI1G7EjAt3Lme-qGsOo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-oxford-blue/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="text-label-caps font-label-caps opacity-80">Reference Material</p>
+<h4 class="font-bold">Steam Engine Mechanics</h4>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-6 flex flex-col justify-center border border-border-subtle">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary border border-border-subtle shrink-0">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div>
+<h4 class="font-bold text-oxford-blue">Study Hint</h4>
+<p class="text-body-sm text-secondary mt-1">James Watt's major contribution was finding a way to prevent the loss of latent heat during the cooling of the cylinder.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer / Feedback (Minimalist) -->
+<footer class="mt-auto py-8 border-t border-border-subtle text-center">
+<p class="text-body-sm text-secondary">
+                Don't worry, your progress is automatically saved. 
+                <a class="text-primary hover:underline ml-1" href="#">View Session History</a>
+</p>
+</footer>
+</main>
+<!-- Mobile Navigation (Bottom Bar) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-border-subtle flex justify-around items-center h-16 px-4 z-50">
+<button class="flex flex-col items-center text-secondary">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-[10px]">Tutor</span>
+</button>
+<button class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">quiz</span>
+<span class="text-[10px] font-bold">Quiz</span>
+</button>
+<button class="flex flex-col items-center text-secondary">
+<span class="material-symbols-outlined">style</span>
+<span class="text-[10px]">Cards</span>
+</button>
+<button class="flex flex-col items-center text-secondary">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px]">Stats</span>
+</button>
+</nav>
+<script>
+        function selectOption(element) {
+            // Find the container or parent logic
+            const container = element.parentElement;
+            const options = container.querySelectorAll('label');
+            
+            options.forEach(opt => {
+                // Reset styling
+                opt.classList.remove('border-primary', 'bg-surface-container-low');
+                opt.classList.add('border-border-subtle');
+                
+                // Reset radio circles
+                const circle = opt.querySelector('.w-6.h-6');
+                const inner = circle.querySelector('.w-3.h-3');
+                circle.classList.remove('border-primary');
+                circle.classList.add('border-border-subtle');
+                inner.classList.add('opacity-0');
+                inner.classList.remove('opacity-100');
+
+                // Reset text
+                const text = opt.querySelector('span');
+                text.classList.remove('oxford-blue', 'font-semibold');
+                text.classList.add('text-on-surface-variant');
+            });
+
+            // Apply active state
+            element.classList.add('border-primary', 'bg-surface-container-low');
+            element.classList.remove('border-border-subtle');
+            
+            const activeCircle = element.querySelector('.w-6.h-6');
+            const activeInner = activeCircle.querySelector('.w-3.h-3');
+            activeCircle.classList.add('border-primary');
+            activeCircle.classList.remove('border-border-subtle');
+            activeInner.classList.remove('opacity-0');
+            activeInner.classList.add('opacity-100');
+
+            const activeText = element.querySelector('span');
+            activeText.classList.add('text-oxford-blue', 'font-semibold');
+            activeText.classList.remove('text-on-surface-variant');
+
+            // Find and check the actual input
+            const input = element.querySelector('input');
+            input.checked = true;
+        }
+
+        // Atmospheric Micro-interaction: Subtle parallax on the illustration
+        document.addEventListener('mousemove', (e) => {
+            const img = document.querySelector('img[data-alt*="industrial"]');
+            if(img) {
+                const amount = 10;
+                const x = (e.clientX / window.innerWidth - 0.5) * amount;
+                const y = (e.clientY / window.innerHeight - 0.5) * amount;
+                img.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
+            }
+        });
+    </script>
+</body></html>
