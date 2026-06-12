@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-12
 
 Agent: Codex
+Task IDs: B012
+Summary: Deferred Ollama installation because the current computer is not the user's personal system. Added an explicit resume task for completing local model setup later today.
+Files Changed: ai_study_buddy_agent_docs/07_TASK_BOARD.md, ai_study_buddy_agent_docs/08_PROGRESS_LOG.md.
+Testing Done: Not applicable; no Ollama software or models were installed on this system.
+Status: B012 pending.
+Next Step: When the user says "continue" from their personal system, begin with Ollama installation, pull the configured chat and embedding models, verify localhost API access, then run upload, chat, quiz, flashcard, and summary checks using live local models.
+
+---
+
+## 2026-06-12
+
+Agent: Codex
 Task IDs: B011
 Summary: Hardened upload, chat, quiz, flashcard, and summary workflows. Added file size and empty-file validation, safe parser errors, readable-text checks, processed-note filtering, and deterministic offline generation counts.
 Files Changed: config/settings.py, notes/, rag/, quiz/, flashcards/, summaries/forms.py, note templates, task/progress/decision/changelog docs.
