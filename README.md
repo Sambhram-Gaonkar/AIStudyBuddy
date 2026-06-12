@@ -32,3 +32,5 @@ Without Ollama, retrieval and generators use local fallback behavior.
 - Production-like local serving uses Waitress and WhiteNoise.
 
 See `ai_study_buddy_agent_docs/11_LOCAL_SETUP.md` and `ai_study_buddy_agent_docs/18_DEPLOYMENT_GUIDE.md`.
+
+For a detailed explanation of the architecture, data flow, local AI models, feature workflows, fallbacks, testing, limitations, and report-ready project material, see [`PROJECT_WORKING.md`](PROJECT_WORKING.md).

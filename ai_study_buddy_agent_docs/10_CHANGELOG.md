@@ -36,6 +36,7 @@ Track user-facing changes here.
 - Roadmap
 - Agent rules
 - End-to-end regression coverage for PDF upload, chat, quiz, exports, flashcards, and summaries
+- Detailed project working and report-generation reference covering architecture, workflows, local AI, storage, security, testing, limitations, and future scope
 
 ### Changed
 

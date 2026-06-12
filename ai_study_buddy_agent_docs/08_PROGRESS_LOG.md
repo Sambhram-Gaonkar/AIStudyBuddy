@@ -22,6 +22,18 @@ Next Step:
 ## 2026-06-12
 
 Agent: Codex
+Task IDs: B013
+Summary: Created a consolidated technical reference explaining the implemented architecture, document pipeline, RAG flow, Ollama models, feature workflows, database relationships, privacy, offline fallbacks, testing, limitations, and report-ready project content.
+Files Changed: PROJECT_WORKING.md, README.md, task/progress documentation.
+Testing Done: Cross-checked the document against current settings, models, upload views, document readers, retrieval engine, generation services, dashboard logic, and full-workflow tests. Ran Git whitespace validation.
+Status: B013 finished.
+Next Step: Complete pending B012 Ollama setup from the user's personal system.
+
+---
+
+## 2026-06-12
+
+Agent: Codex
 Task IDs: B012
 Summary: Deferred Ollama installation because the current computer is not the user's personal system. Added an explicit resume task for completing local model setup later today.
 Files Changed: ai_study_buddy_agent_docs/07_TASK_BOARD.md, ai_study_buddy_agent_docs/08_PROGRESS_LOG.md.

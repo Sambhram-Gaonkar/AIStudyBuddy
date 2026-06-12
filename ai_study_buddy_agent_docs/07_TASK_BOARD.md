@@ -60,3 +60,4 @@ Allowed status values:
 | B010 | Apply Stitch clean interface design | Medium | Finished | Responsive academic-minimalist shell, progress dashboard, tutor chat, quiz, flashcards, and shared UI |
 | B011 | Harden complete study workflow | High | Finished | Validated uploads, friendly parser errors, reliable offline generation, processed-note filtering, and full-flow tests |
 | B012 | Set up Ollama on personal system | High | Pending | Resume when user says "continue" from personal system: install Ollama, pull chat and embedding models, verify Django connectivity, and test the complete live-AI workflow |
+| B013 | Create detailed project working reference | Medium | Finished | Added report-ready architecture, workflows, local AI, data model, security, testing, limitations, and future-scope documentation |
